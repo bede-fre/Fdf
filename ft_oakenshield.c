@@ -6,54 +6,39 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/01/26 14:43:14 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/01/29 18:47:15 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
-
-int		ft_atoi_base(char *s, int base)
-{
-{
-	int				neg;
-	int				i;
-	unsigned int	ret;
-
-	i = 0;
-	neg = 0;
-	ret = 0;
-	while (ft_isspace(s[i]))
-		i++;
-	if (s[i] == '-')
-		neg = 1;
-	if (s[i] == '-' || s[i] == '+')
-		i++;
-	while (s[i] != '\0' && (s[i] >= '0' && s[i] <= '9'))
-	{
-		ret *= 10;
-		ret += s[i] - '0';
-		i++;
-	}
-	if (neg == 1)
-		return (-ret);
-	return (ret);
-}
 
 t_stock	*ft_stock_check(int fd, char **line)
 {
 	int		y;
 	int		i;
 	char	**tab;
+	char	**tmp;
 	t_stock *data;
 
-	y = 0;
+
 	i = 0;
 	while (ft_gnl(fd, line) == 1)
 	{
 		while (*line)
 		{
-			if () )
+			y = -1;
 			tab = ft_split_whitespaces(*line);
+			while (tab[++y])
+			{
+				tmp = ft_strsplit(tab[y], ',');
+				ft_atoi(tmp[0]);
+				if (tmp[1] != NULL)
+					ft_atoi_base(tmp[1], 16);
+			
+			}
+				ft_atoi(tab[y]);
+				if (tab)
+			}
 
 		}
 	
