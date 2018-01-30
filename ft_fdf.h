@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/01/25 17:08:15 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:13:55 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+# define WHITE_COLOR 0xFFFFFF
+
 typedef struct		s_stock
 {
 	int				x;
@@ -30,8 +32,8 @@ typedef struct		s_stock
 	struct s_stock	*n_y;
 	struct s_stock	*p_x;
 	struct s_stock	*p_y;
+}					t_stock;
 
-}				t_stock;
 
 
 

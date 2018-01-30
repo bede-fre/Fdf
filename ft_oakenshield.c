@@ -6,26 +6,26 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/01/30 13:48:55 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/01/30 18:23:13 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "./libft/libft.h"
 #include "ft_fdf.h"
 
-
-void	ft_four_horsemen(t_stock *data, t_stock *tp_x, t_stock *tp_y)
+static void		ft_lst_link(t_stock *data, t_stock *tp_x, t_stock *tp_y)
 {
-	if (data->y == 0)
+	if (data->y == 0 && data->x != 0)
 	{
 		data->p_x = tp_x;
 		tp_x->n_x = data;
 	}
-	else if (data->x == 0)
+	else if (data->x == 0 && data->y != 0)
 	{
 		data->p_y = tp_y;
 		tp_y->n_y = data;
 	}
-	else
+	else if (data->x != 0 && data->y != 0)
 	{
 		data->p_x = tp_x;
 		data->p_y = tp_y;
@@ -34,58 +34,65 @@ void	ft_four_horsemen(t_stock *data, t_stock *tp_x, t_stock *tp_y)
 	}
 }
 
-
-
 t_stock	*ft_stock_check(int fd, char **line)
 {
-	int		cl;
+	int		g;
 	int		ln;
+	int		cl;
 	char	**tab;
 	char	**tmp;
+	t_stock *tp;
 	t_stock	*data;
 	t_stock	*tp_x;
 	t_stock	*tp_y;
 
-	data = (t_stock*)malloc(sizeof(t_stock));
-	ln = 0;
+	g = 0;
+	cl = 0;
+	tp = NULL;
 	tp_x = NULL;
 	tp_y = NULL;
 	while (ft_gnl(fd, line) == 1)
 	{
-		data->y = ln++;
-		while (*line)
+		ln = -1;
+		tab = ft_split_whitespaces(*line);
+		if (g++ == 0)
 		{
-			cl = -1;
-			tab = ft_split_whitespaces(*line);
-			while (tab[++cl])
-			{
-				data->x = cl;
-				tmp = ft_strsplit(tab[cl], ',');
-				data->z = ft_atoi(tmp[0]);
-				if (tmp[1] != NULL)
-					data->color = ft_atoi_base(tmp[1], 16);
-				else
-					data->color = 16777215;
-				if ()
-				while ( )
-				{
-					tp_x = data->n_x;
-					tp_y = data->n_y;
-				}
-
-			}
-			
+			if (!(data = (t_stock*)ft_memalloc(sizeof(t_stock))))
+					return (NULL);
+				tp = data;
 		}
-
+		while (tab[++ln])
+		{
+			if (tab[ln + 1] != NULL)
+			{
+				if (!(data->n_x = (t_stock*)ft_memalloc(sizeof(t_stock))))
+					return (NULL);
+			}
+			data->x = ln;
+			data->y = cl;
+			tmp = ft_strsplit(tab[ln], ',');
+			data->z = ft_atoi(tmp[0]);
+			data->color = (tmp[1]) ? ft_atoi_base(tmp[1], 16) : WHITE_COLOR;
+			ft_lst_link(data, tp_x, tp_y);
+			tp_x = data;
+			if (data->y != 0)
+				tp_y = tp_y->n_x;
+			data = data->n_x;
+		}
+		cl++;
+		tp_y = tp;
+		data = tp;
+		if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
+			return (NULL);
+		data = data->n_y;
 	}
+	ft_putnbr(data->p_x->z);
 	
-	
+	return (data);
 }
 
 
-
-
-
+/*
 int		main(int ac, char **av)
 {
 	int		fd;
@@ -103,3 +110,4 @@ int		main(int ac, char **av)
 		ft_putendl_fd("usage : ./fdf [filename.fdf]", 2);
 	return (0);
 }
+*/
