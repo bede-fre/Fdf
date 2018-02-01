@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/01 15:36:20 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/01 17:50:01 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,24 @@ static void		ft_lst_link(t_stock *data, t_stock *tp_x, t_stock *tp_y)
 
 t_stock	*ft_stock_check(int fd, char **line)
 {
-	int		g;
-	int		ln;
-	int		cl;
-	char	**tab;
-	char	**tmp;
-	t_stock *first_x;
-	t_stock	*data;
-	t_stock	*tp_x;
-	t_stock	*tp_y;
-	t_stock *current;
+	int			g;
+	int			ln;
+	int			cl;
+	char		**tab;
+	char		**tmp;
+	t_stock		*first_x;
+	t_stock		*data;
+	t_stock		*tp_x;
+	t_stock		*tp_y;
+	t_stock		*current;
+	t_values	*values;
 
 	g = 0;
 	cl = 0;
 	first_x = NULL;
 	tp_x = NULL;
 	tp_y = NULL;
+	values = NULL;
 	while (ft_gnl(fd, line) == 1)
 	{
 		ln = -1;
@@ -92,17 +94,16 @@ t_stock	*ft_stock_check(int fd, char **line)
 		tp_y = first_x;
 		data = first_x;
 	}
-	ft_putstr("x = ");
-	ft_putnbr(current->n_y->n_y->x);
+	if (!(values = (t_values*)ft_memalloc(sizeof(t_values))))
+		return (NULL);
+	values->x_max = ln;
+	values->y_max = cl;
+	ft_putstr("x_max = ");
+	ft_putnbr(values->x_max);
 	ft_putchar('\n');
-	ft_putstr("y = ");
-	ft_putnbr(current->n_y->n_y->y);
-	ft_putchar('\n');
-	ft_putstr("z = ");
-	ft_putnbr(current->n_y->n_y->z);
-	ft_putchar('\n');
-	ft_putstr("color = ");
-	ft_putnbr(current->n_y->n_y->color);
+	ft_putstr("y_max = ");
+	ft_putnbr(values->y_max);
+
 	return (data);
 }
 
