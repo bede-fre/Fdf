@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/01/30 18:23:13 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/01 15:36:20 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,15 @@ t_stock	*ft_stock_check(int fd, char **line)
 	int		cl;
 	char	**tab;
 	char	**tmp;
-	t_stock *tp;
+	t_stock *first_x;
 	t_stock	*data;
 	t_stock	*tp_x;
 	t_stock	*tp_y;
+	t_stock *current;
 
 	g = 0;
 	cl = 0;
-	tp = NULL;
+	first_x = NULL;
 	tp_x = NULL;
 	tp_y = NULL;
 	while (ft_gnl(fd, line) == 1)
@@ -59,7 +60,15 @@ t_stock	*ft_stock_check(int fd, char **line)
 		{
 			if (!(data = (t_stock*)ft_memalloc(sizeof(t_stock))))
 					return (NULL);
-				tp = data;
+				first_x = data;
+				current = data;
+		}
+		else
+		{
+			if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
+				return (NULL);
+			data = data->n_y;
+			first_x = data;
 		}
 		while (tab[++ln])
 		{
@@ -80,17 +89,22 @@ t_stock	*ft_stock_check(int fd, char **line)
 			data = data->n_x;
 		}
 		cl++;
-		tp_y = tp;
-		data = tp;
-		if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
-			return (NULL);
-		data = data->n_y;
+		tp_y = first_x;
+		data = first_x;
 	}
-	ft_putnbr(data->p_x->z);
-	
+	ft_putstr("x = ");
+	ft_putnbr(current->n_y->n_y->x);
+	ft_putchar('\n');
+	ft_putstr("y = ");
+	ft_putnbr(current->n_y->n_y->y);
+	ft_putchar('\n');
+	ft_putstr("z = ");
+	ft_putnbr(current->n_y->n_y->z);
+	ft_putchar('\n');
+	ft_putstr("color = ");
+	ft_putnbr(current->n_y->n_y->color);
 	return (data);
 }
-
 
 /*
 int		main(int ac, char **av)
