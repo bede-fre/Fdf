@@ -6,23 +6,22 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/02 17:24:44 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/12 17:49:53 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft/libft.h"
 #include "ft_fdf.h"
 
-/*
 static void		ft_clear_tab(char **tab)
 {
-	int		i;
+	int			i;
 
 	i = -1;
 	while (tab[++i])
-		ft_memdel((void*)tab[i]);
-	ft_memdel((void*)tab);
-}*/
+		free(tab[i]);
+	free(tab);
+}
 
 static void		ft_lst_link(t_stock *data, t_stock *tp_x, t_stock *tp_y)
 {
@@ -47,15 +46,15 @@ static void		ft_lst_link(t_stock *data, t_stock *tp_x, t_stock *tp_y)
 
 static void		ft_stock(t_values *val, t_stock *data, char **line)
 {
-	char	**tab;
-	char	**tp;
+	char		**tab;
+	char		**tp;
 
 	tab = ft_split_whitespaces(*line);
 	while (tab[++(val->ln)])
 	{
 		if (tab[(val->ln) + 1] != NULL)
 			if (!(data->n_x = (t_stock*)ft_memalloc(sizeof(t_stock))))
-				//PUT MALLOC PROTECTION DUMMY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				exit(1);
 		data->x = val->ln;
 		data->y = val->cl;
 		tp = ft_strsplit(tab[val->ln], ',');
@@ -66,69 +65,45 @@ static void		ft_stock(t_values *val, t_stock *data, char **line)
 		if (data->y != 0)
 			val->tp_y = val->tp_y->n_x;
 		data = data->n_x;
-		}
-//	ft_clear_tab(tp);
-//	ft_clear_tab(tab);
+		ft_clear_tab(tp);
+	}
+	ft_clear_tab(tab);
 }
 
-
-static void		ft_links_creation(t_values *val, t_stock *data)
+static t_stock	*ft_links_creation(t_values *val, t_stock *data)
 {
-	static int		first;
-
-	first = 0;
-	if (first++ == 0)
-	{
-		if (!(data = (t_stock*)ft_memalloc(sizeof(t_stock))))
-			//PUT MALLOC PROTECTION DUMMY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		val->first_x = data;
-		val->first_link = data;
-	}
-	else
-	{
-		if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
-			//PUT MALLOC PROTECTION DUMMY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		data = data->n_y;
-		val->first_x = data;
-	}
+	if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
+		exit(1);
+	data = data->n_y;
+	val->first_x = data;
+	return (data);
 }
 
-t_stock	*ft_read_stock(int fd, char **line)
+t_values		*ft_read_stock(int fd, char **line)
 {
-	//int			first;
 	t_stock		*data;
 	t_values	*val;
+	static int	first;
 
-//	first = 0;
-	data = NULL;
-	val = NULL;
-	if (!(val = (t_values*)ft_memalloc(sizeof(t_values))))
+	if (!(data = (t_stock*)ft_memalloc(sizeof(t_stock)))
+		|| !(val = (t_values*)ft_memalloc(sizeof(t_values))))
 		return (NULL);
+	val->first_x = data;
+	val->first_link = data;
 	while (ft_gnl(fd, line) == 1)
 	{
 		val->ln = -1;
-		/*if (first++ == 0)
-		{
-			if (!(data = (t_stock*)ft_memalloc(sizeof(t_stock))))
-					return (NULL);
-				val->first_x = data;
-				val->first_link = data;
-		}
+		if (first == 0)
+			first++;
 		else
-		{
-			if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
-				return (NULL);
-			data = data->n_y;
-			val->first_x = data;
-		}*/
-		ft_links_creation(val, data);
+			data = ft_links_creation(val, data);
 		ft_stock(val, data, line);
 		(val->cl)++;
 		val->tp_y = val->first_x;
 		data = val->first_x;
+		free(*line);
 	}
 	val->x_max = val->ln;
 	val->y_max = val->cl;
-	ft_putnbr(val->y_max);
-	return (data);
+	return (val);
 }
