@@ -1,24 +1,5 @@
 #include "ft_fdf.h"
 
-t_values *ft_read_stock(int fd, char **line);
-
-void	ft_freelst(t_stock *list)
-{
-	t_stock *line;
-
-	while (list)
-	{
-		line = list;
-		while (line)
-		{
-			free(line);
-			line = line->n_x;
-		}
-		free(line);
-		list = list->n_y;
-	}
-}
-
 static void	ft_print_list(t_stock *list)
 {
 	t_stock	*line;
@@ -86,10 +67,10 @@ int	main(int ac, char **av)
 		fd = open(av[1], O_RDONLY);
 		data = ft_read_stock(fd, &line);
 		ft_print_list(data->first_link);
-		ft_putchar('\n');
 		//ft_revdisplay(data->tp_x);
+		//ft_color_range(data);
 		close(fd);
-		//ft_freelst(data->first_link);
+		ft_free_lst(&data->first_link);
 		free(data);
 		free(line);
 	}
@@ -97,4 +78,3 @@ int	main(int ac, char **av)
 		ft_putendl_fd("usage : ./fdf [filename.fdf]", 2);
 	return (0);
 }
-

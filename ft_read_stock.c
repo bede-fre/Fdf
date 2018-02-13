@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/12 17:49:53 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/13 17:35:02 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		ft_clear_tab(char **tab)
 	free(tab);
 }
 
-static void		ft_lst_link(t_stock *data, t_stock *tp_x, t_stock *tp_y)
+static void		ft_link(t_stock *data, t_stock *tp_x, t_stock *tp_y)
 {
 	if (data->y == 0 && data->x != 0)
 	{
@@ -54,13 +54,16 @@ static void		ft_stock(t_values *val, t_stock *data, char **line)
 	{
 		if (tab[(val->ln) + 1] != NULL)
 			if (!(data->n_x = (t_stock*)ft_memalloc(sizeof(t_stock))))
+			{
+				ft_free_lst(&val->first_link);
 				exit(1);
+			}
 		data->x = val->ln;
 		data->y = val->cl;
 		tp = ft_strsplit(tab[val->ln], ',');
 		data->z = ft_atoi(tp[0]);
 		data->color = (tp[1]) ? ft_atoi_base(tp[1], 16) : WHITE_COLOR;
-		ft_lst_link(data, val->tp_x, val->tp_y);
+		ft_link(data, val->tp_x, val->tp_y);
 		val->tp_x = data;
 		if (data->y != 0)
 			val->tp_y = val->tp_y->n_x;
@@ -73,13 +76,16 @@ static void		ft_stock(t_values *val, t_stock *data, char **line)
 static t_stock	*ft_links_creation(t_values *val, t_stock *data)
 {
 	if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
+	{
+		ft_free_lst(&val->first_link);
 		exit(1);
+	}
 	data = data->n_y;
 	val->first_x = data;
 	return (data);
 }
 
-t_values		*ft_read_stock(int fd, char **line)
+t_values	*ft_read_stock(int fd, char **line)
 {
 	t_stock		*data;
 	t_values	*val;
@@ -102,8 +108,9 @@ t_values		*ft_read_stock(int fd, char **line)
 		val->tp_y = val->first_x;
 		data = val->first_x;
 		free(*line);
+		ft_stock_x_max(val);
+		ft_putnbr(val->x_max);
 	}
-	val->x_max = val->ln;
 	val->y_max = val->cl;
 	return (val);
 }
