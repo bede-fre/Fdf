@@ -6,14 +6,14 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/13 17:33:35 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:41:45 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FDF_H
 # define FT_FDF_H
 
-# include "./libft/libft.h"
+# include "libft.h"
 # include <mlx.h>
 # include <math.h>
 # include <stdlib.h>
@@ -49,10 +49,12 @@ typedef struct		s_values
 	struct s_stock	*first_x;
 }					t_values;
 
-void		ft_val_z_stock(t_values *val, char **tp);
-void		ft_color_range(t_values *val);
-void		ft_free_lst(t_stock **list);
-void		ft_stock_x_max(t_values *val);
-t_values	*ft_read_stock(int fd, char **line);
+void				ft_val_z_stock(t_values *val, char **tp);
+void				ft_color_range(t_values *val);
+void				ft_free_lst(t_stock **list);
+void				ft_stock_x_max(t_values *val);
+void				ft_quit_line_more(t_values *val);
+void				ft_quit_line_less(t_values *val);
+t_values			*ft_read_stock(int fd, char **line);
 
 #endif

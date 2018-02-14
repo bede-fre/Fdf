@@ -6,11 +6,10 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/13 17:35:02 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:41:11 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
 #include "ft_fdf.h"
 
 static void		ft_clear_tab(char **tab)
@@ -54,15 +53,13 @@ static void		ft_stock(t_values *val, t_stock *data, char **line)
 	{
 		if (tab[(val->ln) + 1] != NULL)
 			if (!(data->n_x = (t_stock*)ft_memalloc(sizeof(t_stock))))
-			{
 				ft_free_lst(&val->first_link);
-				exit(1);
-			}
 		data->x = val->ln;
 		data->y = val->cl;
 		tp = ft_strsplit(tab[val->ln], ',');
 		data->z = ft_atoi(tp[0]);
 		data->color = (tp[1]) ? ft_atoi_base(tp[1], 16) : WHITE_COLOR;
+		ft_quit_line_more(val);
 		ft_link(data, val->tp_x, val->tp_y);
 		val->tp_x = data;
 		if (data->y != 0)
@@ -70,22 +67,20 @@ static void		ft_stock(t_values *val, t_stock *data, char **line)
 		data = data->n_x;
 		ft_clear_tab(tp);
 	}
+	ft_quit_line_less(val);
 	ft_clear_tab(tab);
 }
 
 static t_stock	*ft_links_creation(t_values *val, t_stock *data)
 {
 	if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
-	{
 		ft_free_lst(&val->first_link);
-		exit(1);
-	}
 	data = data->n_y;
 	val->first_x = data;
 	return (data);
 }
 
-t_values	*ft_read_stock(int fd, char **line)
+t_values		*ft_read_stock(int fd, char **line)
 {
 	t_stock		*data;
 	t_values	*val;
@@ -109,7 +104,6 @@ t_values	*ft_read_stock(int fd, char **line)
 		data = val->first_x;
 		free(*line);
 		ft_stock_x_max(val);
-		ft_putnbr(val->x_max);
 	}
 	val->y_max = val->cl;
 	return (val);
