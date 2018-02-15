@@ -6,7 +6,7 @@
 #    By: bede-fre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 12:44:25 by bede-fre          #+#    #+#              #
-#    Updated: 2018/02/14 17:39:08 by bede-fre         ###   ########.fr        #
+#    Updated: 2018/02/15 12:17:16 by bede-fre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC = sources/main2.c sources/ft_free_list.c sources/ft_read_stock.c
 INCLUDES = ./includes
 LIBFT = ./libft/libft.a
 OBJ = $(SRC:.c=.o)
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 
 _GREY		=$ \033[30m
 _RED		=$ \033[31m
@@ -42,15 +42,15 @@ libft:
 	@make -C libft
 
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
-	@printf "$(_CLEAR)$(_CYAN)# LIBRARY FILE CREATION # $(_GREEN)libft.a\n$(_END)"
+	@$(CC) $(FLAGS) -lmlx -framework OpenGL -framework Appkit $(OBJ) $(LIBFT) -o $(NAME)
+	@printf "$(_CLEAR)$(_CYAN)# EXECUTABLE FILE CREATION # $(_GREEN)fdf\n$(_END)"
 	@printf "$(_GREEN)# EXECUTABLE FILE CREATED #\n$(_END)$(_SHOW_CURS)"
 
 %.o: %.c
 	@$(CC) $(FLAGS) -I $(INCLUDES) -c $^ -o $@
 	@printf "$(_CLEAR)$(_CYAN)# EXECUTABLE FILE CREATION # $(_END)"
 	@printf "$(_YELLOW)$@$(_END)"
-	@printf "$(_HIDE_CURS)\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"E
+	@printf "$(_HIDE_CURS)\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
 
 clean:
 	@make -C libft clean

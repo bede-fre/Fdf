@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/14 15:41:20 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/15 18:21:23 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,35 @@ static void	ft_revdisplay(t_stock *list)
 	}
 }*/
 
+int		ft_color(unsigned char alpha, unsigned char blue, unsigned char green, unsigned char red)
+{
+	return ((int)(alpha << 24) | (int)(red << 16) | (int)(green << 8)
+			| (int)(blue));
+}
+/*
+int		gere_key()
+{
+
+	return (0);
+}
+*/
+
+int		ft_deal_key(int key, t_values *data)
+{
+	if (key == 53)
+	{
+		ft_free_lst(&data->first_link);
+		exit(0);
+	}
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
-	int		i;
-	int		fd;
+	int			i;
+	int			fd;
 	t_values	*data;
-	char	*line;
+	char		*line;
 
 	i = 0;
 	if (ac == 2)
@@ -79,9 +102,16 @@ int	main(int ac, char **av)
 		fd = open(av[1], O_RDONLY);
 		data = ft_read_stock(fd, &line);
 		ft_print_list(data->first_link);
+
 		//ft_revdisplay(data->tp_x);
 		//ft_color_range(data);
+
 		close(fd);
+		data->mlx = mlx_init();
+		data->win = mlx_new_window(data->mlx,500,500, "FdF");
+		mlx_pixel_put(data->mlx, data->win, 250, 250, 0xFFFFFF);
+		mlx_key_hook(data->win, ft_deal_key, data);
+		mlx_loop(data->mlx);
 		ft_free_lst(&data->first_link);
 		free(data);
 		free(line);

@@ -1,1 +1,1 @@
-/Users/bede-fre/fdf_42/libft/libft.h
+../libft/libft.h

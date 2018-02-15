@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 13:58:42 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/14 15:40:58 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/15 18:19:21 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_free_lst(t_stock **list)
 			ft_memdel((void **)&tp);
 		}
 	}
-	exit(1);
 }
 
 void	ft_stock_x_max(t_values *val)
@@ -46,7 +45,10 @@ void	ft_quit_line_less(t_values *val)
 	if (val->ln < val->x_max)
 	{
 		if (val->x_max > val->ln)
+		{
 			ft_free_lst(&val->first_link);
+			exit(1);
+		}
 	}
 }
 
@@ -55,6 +57,9 @@ void	ft_quit_line_more(t_values *val)
 	if (val->x_max != 0)
 	{
 		if (val->ln >= val->x_max)
+		{
 			ft_free_lst(&val->first_link);
+			exit(1);
+		}
 	}
 }

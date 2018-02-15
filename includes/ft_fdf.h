@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/14 15:41:45 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/15 18:17:09 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct		s_stock
 	int				y;
 	int				z;
 	int				color;
+	int				x_2d;
+	int				y_2d;
 	struct s_stock	*n_x;
 	struct s_stock	*n_y;
 	struct s_stock	*p_x;
@@ -43,10 +45,14 @@ typedef struct		s_values
 	int				z_min;
 	int				z_max;
 	int				z_range;
+	void			*mlx;
+	void			*win;
+	int				color;
 	struct s_stock	*tp_y;
 	struct s_stock	*tp_x;
 	struct s_stock	*first_link;
 	struct s_stock	*first_x;
+	struct s_mlx	*init;
 }					t_values;
 
 void				ft_val_z_stock(t_values *val, char **tp);
