@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/15 18:17:09 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/16 11:43:26 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ typedef struct		s_values
 	int				z_range;
 	void			*mlx;
 	void			*win;
+	void			*img;
+	char			*s_px;
+	int				endian;
+	int				bpp;
+	int				sz_ln_px;
 	int				color;
 	struct s_stock	*tp_y;
 	struct s_stock	*tp_x;
