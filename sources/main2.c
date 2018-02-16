@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/16 17:13:57 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/16 17:27:30 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,28 +125,28 @@ void	ft_fill_px(unsigned char *s_px, int x, int y, int color)
 	//(void)color;
 
 	s_px[0] = (unsigned char)(color);
-	s_px[1] = (unsigned char)(color << 8);
-	s_px[2] = (unsigned char)(color << 16);
+	s_px[1] = (unsigned char)(color >> 8);
+	s_px[2] = (unsigned char)(color >> 16);
 	s_px[3] = (unsigned char)(0);
 
 	s_px[4] = (unsigned char)(color);
-	s_px[5] = (unsigned char)(color << 16);
-	s_px[6] = (unsigned char)(color << 8);
+	s_px[5] = (unsigned char)(color >> 8);
+	s_px[6] = (unsigned char)(color >> 16);
 	s_px[7] = (unsigned char)(0);
 
-	s_px[8] = (unsigned char)(color << 8);
-	s_px[9] = (unsigned char)(color << 16);
-	s_px[10] = (unsigned char)(color);
+	s_px[8] = (unsigned char)(color);
+	s_px[9] = (unsigned char)(color >> 8);
+	s_px[10] = (unsigned char)(color >> 16);
 	s_px[11] = (unsigned char)(0);
 
-	s_px[12] = (unsigned char)(color << 16);
-	s_px[13] = (unsigned char)(color << 8);
-	s_px[14] = (unsigned char)(color);
+	s_px[12] = (unsigned char)(color);
+	s_px[13] = (unsigned char)(color >> 8);
+	s_px[14] = (unsigned char)(color >> 16);
 	s_px[15] = (unsigned char)(0);
 
-	s_px[16] = (unsigned char)(color << 8);         //BLUE
-	s_px[17] = (unsigned char)(color);         //GREEN
-	s_px[18] = (unsigned char)(color << 16);       //RED
+	s_px[16] = (unsigned char)(color);         //BLUE
+	s_px[17] = (unsigned char)(color >> 8);         //GREEN
+	s_px[18] = (unsigned char)(color >> 16);       //RED
 	s_px[19] = (unsigned char)(0);            //ALPHA
 	
 }
@@ -203,7 +203,7 @@ int	main(int ac, char **av)
 		//mlx_pixel_put(data->mlx, data->win, 250, 250, 0xFFFFFF);
 		//ft_square(50, 50, 250, 250, data);
 		data->s_px = mlx_get_data_addr(data->img, &data->bpp, &data->sz_ln_px, &data->endian);
-		ft_fill_px((unsigned char*)data->s_px, 0, 0, 0xFF0000);
+		ft_fill_px((unsigned char*)data->s_px, 0, 0, 0x82E0AA);
 
 		mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 		mlx_mouse_hook(data->win, ft_deal_keymouse, data);
