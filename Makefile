@@ -6,13 +6,14 @@
 #    By: bede-fre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 12:44:25 by bede-fre          #+#    #+#              #
-#    Updated: 2018/02/15 12:17:16 by bede-fre         ###   ########.fr        #
+#    Updated: 2018/02/19 14:17:34 by bede-fre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = clang
-SRC = sources/main2.c sources/ft_free_list.c sources/ft_read_stock.c
+SRC = sources/main2.c sources/ft_free_list.c sources/ft_read_stock.c \
+	sources/ft_algo_bresenham.c
 INCLUDES = ./includes
 LIBFT = ./libft/libft.a
 OBJ = $(SRC:.c=.o)

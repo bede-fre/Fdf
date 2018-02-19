@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/16 17:27:30 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/19 19:05:56 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,21 @@
 
 static void	ft_print_list(t_stock *list)
 {
+	int i;
 	t_stock	*line;
-	char	*nbr;
+	//char	*nbr;
 
+	i = 0;
 	while (list)
 	{
 		line = list;
 		while (line)
 		{
-			ft_putnbr(line->z);
+			ft_putchar('-');
+			ft_putnbr(++i);
+			ft_putchar('-');
+			ft_putchar('\n');
+			/*ft_putnbr(line->z);
 			if (line->color)
 			{
 				ft_putstr(",0x");
@@ -31,13 +37,15 @@ static void	ft_print_list(t_stock *list)
 				ft_memdel((void*)&nbr);
 			}
 			if (line->n_x != NULL)
-				ft_putchar(' ');
+				ft_putchar(' ');*/
 			line = line->n_x;
 		}
-		ft_putchar('\n');
+		//ft_putchar('\n');
 		list = list->n_y;
 	}
 }
+
+
 /*
 static void	ft_revdisplay(t_stock *list)
 {
@@ -72,19 +80,6 @@ int		ft_color(unsigned char alpha, unsigned char blue, unsigned char green, unsi
 			| (int)(blue));
 }*/
 
-// Function return 1 for little endian or 0 for big endian
-/*
-void ft_check_endianness(t_values *data)
-{
-	unsigned int	i;
-	char			*s;
-		
-	i = 1;
-	s = (char*) &i;
-	data->endian = (int)*s;
-}
-*/
-
 int		ft_close_win(int key, t_values *data)
 {
 	(void)key;
@@ -118,37 +113,20 @@ int		ft_deal_keymouse(int key, int x, int y, t_values *data)
 }
 
 
-void	ft_fill_px(unsigned char *s_px, int x, int y, int color)
+void	ft_fill_px(t_values *data, int x, int y, int color)
 {
-	(void)x;
-	(void)y;
-	//(void)color;
+	int		first;
 
-	s_px[0] = (unsigned char)(color);
-	s_px[1] = (unsigned char)(color >> 8);
-	s_px[2] = (unsigned char)(color >> 16);
-	s_px[3] = (unsigned char)(0);
-
-	s_px[4] = (unsigned char)(color);
-	s_px[5] = (unsigned char)(color >> 8);
-	s_px[6] = (unsigned char)(color >> 16);
-	s_px[7] = (unsigned char)(0);
-
-	s_px[8] = (unsigned char)(color);
-	s_px[9] = (unsigned char)(color >> 8);
-	s_px[10] = (unsigned char)(color >> 16);
-	s_px[11] = (unsigned char)(0);
-
-	s_px[12] = (unsigned char)(color);
-	s_px[13] = (unsigned char)(color >> 8);
-	s_px[14] = (unsigned char)(color >> 16);
-	s_px[15] = (unsigned char)(0);
-
-	s_px[16] = (unsigned char)(color);         //BLUE
-	s_px[17] = (unsigned char)(color >> 8);         //GREEN
-	s_px[18] = (unsigned char)(color >> 16);       //RED
-	s_px[19] = (unsigned char)(0);            //ALPHA
+	first = (x * (data->bpp) / 8) + (y * data->sz_ln_px);
 	
+	if (first < 0 || x > 500 || y > 500)
+	{
+		return ;
+	}
+	data->s_px[first] = (unsigned char)(color);
+	data->s_px[first + 1] = (unsigned char)(color >> 8);
+	data->s_px[first + 2] = (unsigned char)(color >> 16);
+	data->s_px[first + 3] = (unsigned char)(color >> 24);
 }
 
 /*
@@ -176,6 +154,53 @@ void	ft_square(int l, int w, int x, int y, t_values *data)
 */
 
 
+void	ft_display_lst(t_values *data, t_stock *list)
+{
+	t_stock	*line;
+
+	ft_putchar('\n');
+	while (list)
+	{
+		line = list;
+		while (line)
+		{
+			line = line->n_x;
+			if (list->n_x)
+				ft_algo(data, list->a, list->b, list->n_x->a, list->n_x->b);
+			if (list->n_y)
+				ft_algo(data, list->a, list->b, list->n_y->a, list->n_y->b);
+		}
+		list = list->n_y;
+	}
+}
+
+/*
+void	ft_display_lst(t_values *data, t_stock *list)
+{
+	t_stock	*lst;
+	t_stock	*line;
+
+	line = list;
+	while (line)
+	{
+		lst = line;
+		line = line->n_y;
+		while (lst)
+		{
+			lst = lst->n_x;
+	i		if (list->n_x)
+				ft_algo(data, list->a, list->b, list->n_x->a, list->n_x->b);
+			if (list->n_y)
+				ft_algo(data, list->a, list->b, list->n_y->a, list->n_y->b);
+			ft_putnbr(list->z);
+			ft_putchar(' ');
+		}
+		ft_putchar('\n');
+		//ft_putnbr(list->y);
+		ft_putchar(' ');
+	}
+}
+*/
 
 int	main(int ac, char **av)
 {
@@ -183,7 +208,10 @@ int	main(int ac, char **av)
 	int			fd;
 	t_values	*data;
 	char		*line;
-	
+	//int x;
+	//int y;
+
+	//y = -1;
 	i = 0;
 	if (ac == 2)
 	{
@@ -195,20 +223,26 @@ int	main(int ac, char **av)
 		//ft_color_range(data);
 
 		close(fd);
-		//ft_check_endianness(data);
-
 		data->mlx = mlx_init();
 		data->win = mlx_new_window(data->mlx,500,500, "FdF");
 		data->img = mlx_new_image(data->mlx, 500, 500);
-		//mlx_pixel_put(data->mlx, data->win, 250, 250, 0xFFFFFF);
 		//ft_square(50, 50, 250, 250, data);
 		data->s_px = mlx_get_data_addr(data->img, &data->bpp, &data->sz_ln_px, &data->endian);
-		ft_fill_px((unsigned char*)data->s_px, 0, 0, 0x82E0AA);
-
+		/*while (++y < 500)
+		{
+			x = -1;
+			while (++x < 500)
+				ft_fill_px(data, x, y, 0x82E0AA);
+		}
+		//mlx_clear_window(data->mlx, data->win);
+		//mlx_destroy_image(data->mlx, data->img);
+*/
+		ft_display_lst(data, data->first_link);
 		mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+		//mlx_string_put(data->mlx, data->win, 250, 250, 0x000000, "bbb");
 		mlx_mouse_hook(data->win, ft_deal_keymouse, data);
 		mlx_key_hook(data->win, ft_deal_key, data);
-		mlx_hook(data->win, 17, (1L<<17), &ft_close_win, data);
+		//mlx_hook(data->win, 17, (1L<<17), &ft_close_win, data);
 		mlx_loop(data->mlx);
 		ft_free_lst(&data->first_link);
 		free(data);

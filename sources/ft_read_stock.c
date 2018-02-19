@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/15 18:12:55 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/19 18:51:35 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void		ft_stock(t_values *val, t_stock *data, char **line)
 		tp = ft_strsplit(tab[val->ln], ',');
 		data->z = ft_atoi(tp[0]);
 		data->color = (tp[1]) ? ft_atoi_base(tp[1], 16) : WHITE_COLOR;
+		ft_proj_iso(data);
 		ft_quit_line_more(val);
 		ft_link(data, val->tp_x, val->tp_y);
 		val->tp_x = data;
