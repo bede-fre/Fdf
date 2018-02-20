@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 13:58:42 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/19 18:50:53 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/20 14:03:47 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,17 @@ void	ft_quit_line_more(t_values *val)
 	}
 }
 
-void	ft_proj_iso(t_stock*data)
+void	ft_proj_iso(t_stock*data, t_values *val)
 {
 	double		ang;
 
+	val->w_win = 1600;
+	val->l_win = 1200;
 	ang = 30.0  * (M_PI/180.0);
 	data->a = ((data->x * cos(ang))
 		+ (data->y * cos(ang + (120.0 * (M_PI/180.0))))
-		+ (data->z * cos(ang - (120.0 * (M_PI/180.0))))) * (double)ZOOM + 250.0;
+		+ (data->z * cos(ang - (120.0 * (M_PI/180.0))))) * (double)ZOOM + ((val->w_win)/2);
 	data->b = ((data->x * sin(ang))
 		+ (data->y * sin(ang + (120.0 * (M_PI/180.0))))
-		+ (data->z * sin(ang - (120.0 * (M_PI/180.0))))) * (double)ZOOM + 250.0;
+		+ (data->z * sin(ang - (120.0 * (M_PI/180.0))))) * (double)ZOOM + ((val->l_win)/2);
 }

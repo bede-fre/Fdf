@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/20 13:30:06 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/20 13:49:57 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_fill_px(t_values *data, int x, int y, int color)
 
 	first = (x * (data->bpp) / 8) + (y * data->sz_ln_px);
 	
-	if (first < 0 || x > 500 || y > 500)
+	if (first < 0 || x > 1600 || y > 1200)
 	{
 		return ;
 	}
@@ -92,8 +92,8 @@ int	main(int ac, char **av)
 		data = ft_read_stock(fd, &line);
 		close(fd);
 		data->mlx = mlx_init();
-		data->win = mlx_new_window(data->mlx,500,500, "FdF");
-		data->img = mlx_new_image(data->mlx, 500, 500);
+		data->win = mlx_new_window(data->mlx, data->w_win, data->l_win, "FdF");
+		data->img = mlx_new_image(data->mlx, data->w_win, data->l_win);
 		data->s_px = mlx_get_data_addr(data->img, &data->bpp, &data->sz_ln_px, &data->endian);
 		/*while (++y < 500)
 		{
