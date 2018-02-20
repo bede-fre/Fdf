@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/20 13:53:58 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/20 15:15:22 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ typedef struct		s_values
 	int				bpp;
 	int				sz_ln_px;
 	int				color;
-	double				l_win;
-	double				w_win;
+	int				zoom;
+	double			l_win;
+	double			w_win;
 	struct s_stock	*tp_y;
 	struct s_stock	*tp_x;
 	struct s_stock	*first_link;

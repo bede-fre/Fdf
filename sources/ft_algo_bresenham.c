@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 13:28:36 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/20 13:28:17 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/20 17:18:21 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 	int	b1;
 	int	b2;
 
-	a1 = lst->a;
-	a2 = st->a;
-	b1 = lst->b;
-	b2 = st->b;
+	a1 = (lst->a) * (double)(data->zoom); //+ ((data->w_win)/2);
+	a2 = (st->a) * (double)(data->zoom); //+ ((data->w_win)/2);
+	b1 = (lst->b) * (double)(data->zoom); // + ((data->l_win)/2);
+	b2 = (st->b) * (double)(data->zoom); // + ((data->l_win)/2);
 	if ((dx = (a2 - a1)) != 0)
 	{
 		if (dx > 0)
