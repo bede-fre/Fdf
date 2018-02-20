@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/19 18:51:16 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/20 13:28:56 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void				ft_quit_line_more(t_values *val);
 void				ft_quit_line_less(t_values *val);
 void				ft_proj_iso(t_stock *data);
 void				ft_fill_px(t_values *data, int x, int y, int color);
-void				ft_algo(t_values *data, int a1, int b1, int a2, int b2);
+void				ft_algo(t_values *data, t_stock *lst, t_stock *st, int color);
 t_values			*ft_read_stock(int fd, char **line);
 
 #endif
