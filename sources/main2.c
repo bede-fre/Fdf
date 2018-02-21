@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/21 16:18:19 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/21 17:23:57 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	ft_display_lst(t_values *data, t_stock *list)
 		while (line)
 		{
 			if (line->n_x)
-				ft_algo(data, line, line->n_x, line->color);
+				ft_algo(data, line, line->n_x);
 			if (line->n_y)
-				ft_algo(data, line, line->n_y, line->color);
+				ft_algo(data, line, line->n_y);
 			line = line->n_x;
 		}
 		col = col->n_y;
@@ -101,15 +101,17 @@ int	main(int ac, char **av)
 	t_values	*data;
 	char		*line;
 
-	if (ac == 2)
+	if (ac == 4)
 	{
+
 		fd = open(av[1], O_RDONLY);
 		data = ft_read_stock(fd, &line);
 		close(fd);
-		
+		if (!(data->color = (t_color*)ft_memalloc(sizeof(t_color))))
+			exit(1);
 		ft_color_range(data);
-		data->cl_s = 0x00FF00;
-		data->cl_e = 0xFF0000;
+
+		ft_compare_color(ft_atoi_base(av[2], 16), ft_atoi_base(av[3], 16), data);
 		ft_gradient_color(data, data->first_link, data->first_link->n_x);
 		data->mlx = mlx_init();
 		data->win = mlx_new_window(data->mlx, data->w_win, data->l_win, "FdF");
@@ -126,6 +128,6 @@ int	main(int ac, char **av)
 		free(line);
 	}
 	else
-		ft_putendl_fd("usage : ./fdf [filename.fdf]", 2);
+		ft_putendl_fd("usage : ./fdf [filename.fdf] color_bottom [0x******] color_top [0x******]" , 2);
 	return (0);
 }

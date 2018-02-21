@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/21 16:26:43 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/21 17:48:17 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ typedef struct		s_color
 	unsigned char	l_e_r;
 	unsigned char	l_e_g;
 	unsigned char	l_e_b;
+	short			d_r_px;
+	short			d_g_px;
+	short			d_b_px;
 }					t_color;
 
 typedef struct		s_values
@@ -80,10 +83,11 @@ typedef struct		s_values
 	int				bpp;
 	int				sz_ln_px;
 	int				zoom;
-	int				cl_s;
-	int				cl_e;
 	double			l_win;
 	double			w_win;
+	short			rate_r;
+	short			rate_g;
+	short			rate_b;
 	t_stock			*tp_y;
 	t_stock			*tp_x;
 	t_stock			*first_link;
@@ -103,7 +107,8 @@ void				ft_quit_line_more(t_values *val);
 void				ft_quit_line_less(t_values *val);
 void				ft_proj_iso(t_stock *data, t_values *val);
 void				ft_fill_px(t_values *data, int x, int y, int color);
-void				ft_algo(t_values *data, t_stock *lst, t_stock *st, int color);
+void				ft_algo(t_values *data, t_stock *lst, t_stock *st);
+int				ft_merge_color(unsigned char red, unsigned char green, unsigned char blue);
 t_values			*ft_read_stock(int fd, char **line);
 
 #endif
