@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/20 17:17:21 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/21 16:18:19 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	ft_display_lst(t_values *data, t_stock *list)
 		}
 		col = col->n_y;
 	}
-	ft_putnbr(data->zoom);
-	ft_putchar('\n');
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
 
@@ -51,14 +49,18 @@ int		ft_deal_key(int key, t_values *data)
 	mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, data->w_win, data->l_win);
 	data->s_px = mlx_get_data_addr(data->img, &data->bpp, &data->sz_ln_px, &data->endian);
-	if (key == 123)
-	{
+	if (key == 69)
 		data->zoom += 1;
-	}
-	if (key == 124)
-	{
+	if (key == 78)
 		data->zoom -= 1;
-	}
+	if (key == 123)
+		data->w_win -= 10;
+	if (key == 124)
+		data->w_win += 10;
+	if (key == 125)
+		data->l_win += 10;
+	if (key == 126)
+		data->l_win -= 10;
 	ft_display_lst(data, data->first_link);
 	if (key == 53)
 	{
@@ -104,6 +106,11 @@ int	main(int ac, char **av)
 		fd = open(av[1], O_RDONLY);
 		data = ft_read_stock(fd, &line);
 		close(fd);
+		
+		ft_color_range(data);
+		data->cl_s = 0x00FF00;
+		data->cl_e = 0xFF0000;
+		ft_gradient_color(data, data->first_link, data->first_link->n_x);
 		data->mlx = mlx_init();
 		data->win = mlx_new_window(data->mlx, data->w_win, data->l_win, "FdF");
 		data->img = mlx_new_image(data->mlx, data->w_win, data->l_win);

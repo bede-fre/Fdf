@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 13:58:42 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/20 17:06:32 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/21 10:24:14 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	ft_proj_iso(t_stock*data, t_values *val)
 {
 	double		ang;
 
-	val->w_win = 1600;
-	val->l_win = 1200;
-	val->zoom = 40;
+	val->w_win = 500;
+	val->l_win = 500;
+	val->zoom = 20;
 	ang = 30.0  * (M_PI/180.0);
 	data->a = ((data->x * cos(ang))
 		+ (data->y * cos(ang + (120.0 * (M_PI/180.0))))

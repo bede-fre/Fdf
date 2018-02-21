@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 13:28:36 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/20 17:18:21 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/21 14:47:03 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 	int	b1;
 	int	b2;
 
-	a1 = (lst->a) * (double)(data->zoom); //+ ((data->w_win)/2);
-	a2 = (st->a) * (double)(data->zoom); //+ ((data->w_win)/2);
-	b1 = (lst->b) * (double)(data->zoom); // + ((data->l_win)/2);
-	b2 = (st->b) * (double)(data->zoom); // + ((data->l_win)/2);
+	a1 = (lst->a) * (double)(data->zoom) + ((data->w_win)/2);
+	a2 = (st->a) * (double)(data->zoom) + ((data->w_win)/2);
+	b1 = (lst->b) * (double)(data->zoom)  + ((data->l_win)/2);
+	b2 = (st->b) * (double)(data->zoom)  + ((data->l_win)/2);
 	if ((dx = (a2 - a1)) != 0)
 	{
 		if (dx > 0)
@@ -41,7 +41,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 						dy = (dy * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, color);
+							ft_fill_px(data, a1, b1, color); // nb_px = dy
 							if ((a1 = (a1 + 1)) == a2)
 								break;
 							if ((e = (e - dy)) < 0)
@@ -58,7 +58,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 						dx = (dx * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, color);
+							ft_fill_px(data, a1, b1, color); //nb_px = dx
 							if ((b1 = (b1 + 1)) == b2)
 								break;
 							if ((e = (e - dx)) < 0)
@@ -78,7 +78,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 						dy = (dy * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, color);
+							ft_fill_px(data, a1, b1, color); // nb_px = dy
 							if ((a1 = (a1 + 1)) == a2)
 								break;
 							if ((e = (e + dy)) < 0)
@@ -95,7 +95,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 						dx = (dx * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, color);
+							ft_fill_px(data, a1, b1, color); // nb_px = dx
 							if ((b1 = (b1 - 1)) == b2)
 								break;
 							if ((e = (e + dx)) > 0)
@@ -110,7 +110,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 			else
 			{
 				while (a1 < a2)
-					ft_fill_px(data, a1++, b1, color);
+					ft_fill_px(data, a1++, b1, color); // nb_px = dx
 			}
 		}
 		else
@@ -126,7 +126,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 						dy = (dy * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, color);
+							ft_fill_px(data, a1, b1, color); // nb_px = dy
 							if ((a1 = (a1 - 1)) == a2)
 								break;
 							if ((e = (e + dy)) >= 0)
@@ -143,7 +143,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 						dx = (dx * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, color);
+							ft_fill_px(data, a1, b1, color); // nb_px = dx
 							if ((b1 = (b1 + 1)) == b2)
 								break;
 							if ((e = (e + dx)) <= 0)
@@ -163,7 +163,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 						dy = (dy * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, color);
+							ft_fill_px(data, a1, b1, color); // nb_px = dy
 							if ((a1 = (a1 - 1)) == a2)
 								break;
 							if ((e = (e - dy)) >= 0)
@@ -180,7 +180,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 						dx = (dx * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, color);
+							ft_fill_px(data, a1, b1, color); // nb_px = dx
 							if ((b1 = (b1 - 1)) == b2)
 								break;
 							if ((e = (e - dx)) >= 0)
@@ -195,7 +195,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 			else
 			{
 				while (a1 > a2)
-					ft_fill_px(data, a1--, b1, color);
+					ft_fill_px(data, a1--, b1, color); // nb_px = dx
 			}
 		}
 	}
@@ -206,12 +206,12 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 			if (dy > 0)
 			{
 				while (b1 < b2)
-					ft_fill_px(data, a1, b1++, color);
+					ft_fill_px(data, a1, b1++, color); // nb_px = dy
 			}
 			else
 			{
 				while (b1 > b2)
-					ft_fill_px(data, a1, b1--, color);
+					ft_fill_px(data, a1, b1--, color); // nb_px = dy
 			}
 		}
 	}
