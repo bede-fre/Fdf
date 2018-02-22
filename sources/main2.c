@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/22 14:39:12 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/22 15:34:40 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	main(int ac, char **av)
 		
 		data->var_x = (int)((data->w_win) / 2.0);
 		data->var_y = (int)((data->l_win) / 2.0);
-		data->zoom = 20;
+		data->zoom = 40;
 
 		if (!(data->color = (t_color*)ft_memalloc(sizeof(t_color))))
 			exit(1);

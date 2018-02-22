@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/22 10:52:10 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:33:58 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+
+
+
 # include <stdio.h>
 
 
@@ -52,9 +55,12 @@ typedef struct		s_color
 	unsigned char	r2;
 	unsigned char	g2;
 	unsigned char	b2;
-	short			d_r;
-	short			d_g;
-	short			d_b;
+	short			d_r1;
+	short			d_g1;
+	short			d_b1;
+	short			d_r2;
+	short			d_g2;
+	short			d_b2;
 	unsigned char	l_s_r;
 	unsigned char	l_s_g;
 	unsigned char	l_s_b;
