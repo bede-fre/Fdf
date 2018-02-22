@@ -6,13 +6,13 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 13:28:36 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/21 18:02:32 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/22 15:05:59 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
+void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 {
 	int		dx;
 	int		dy;
@@ -25,10 +25,13 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 	float	cpt_g;
 	float	cpt_b;
 
-	a1 = (lst->a) * (double)(data->zoom) + ((data->w_win)/2);
-	a2 = (st->a) * (double)(data->zoom) + ((data->w_win)/2);
-	b1 = (lst->b) * (double)(data->zoom)  + ((data->l_win)/2);
-	b2 = (st->b) * (double)(data->zoom)  + ((data->l_win)/2);
+	ft_proj_iso(lst, st, data);
+	a1 = (lst->a);
+	a2 = (st->a);
+	b1 = (lst->b);
+	b2 = (st->b);
+	//color = (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b));
+	ft_gradient_color(data, lst, st);
 	if ((dx = (a2 - a1)) != 0)
 	{
 		if (dx > 0)
@@ -39,15 +42,15 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 				{
 					if (dx >= dy)
 					{
-						cpt_r = (float)(data->color->d_r_px) / (float)(dy);
-						cpt_g = (float)(data->color->d_g_px) / (float)(dy);
-						cpt_b = (float)(data->color->d_b_px) / (float)(dy);
+						cpt_r = (float)(data->color->d_r_px) / (float)(dx);
+						cpt_g = (float)(data->color->d_g_px) / (float)(dx);
+						cpt_b = (float)(data->color->d_b_px) / (float)(dx);
 						e = dx;
 						dx *= 2;
 						dy = (dy * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dy
+							ft_fill_px(data, a1, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dy
 							if ((a1 = (a1 + 1)) == a2)
 								break;
 							if ((e = (e - dy)) < 0)
@@ -70,7 +73,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 						dx = (dx * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dx
+							ft_fill_px(data, a1, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dx
 							if ((b1 = (b1 + 1)) == b2)
 								break;
 							if ((e = (e - dx)) < 0)
@@ -88,15 +91,15 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 				{
 					if (dx >= -dy)
 					{
-						cpt_r = (float)(data->color->d_r_px) / (float)(dy);
-						cpt_g = (float)(data->color->d_g_px) / (float)(dy);
-						cpt_b = (float)(data->color->d_b_px) / (float)(dy);
+						cpt_r = (float)(data->color->d_r_px) / (float)(dx);
+						cpt_g = (float)(data->color->d_g_px) / (float)(dx);
+						cpt_b = (float)(data->color->d_b_px) / (float)(dx);
 						e = dx;
 						dx *= 2;
 						dy = (dy * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dy
+							ft_fill_px(data, a1, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dy
 							if ((a1 = (a1 + 1)) == a2)
 								break;
 							if ((e = (e + dy)) < 0)
@@ -119,7 +122,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 						dx = (dx * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dx
+							ft_fill_px(data, a1, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dx
 							if ((b1 = (b1 - 1)) == b2)
 								break;
 							if ((e = (e + dx)) > 0)
@@ -141,7 +144,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 				cpt_b = (float)(data->color->d_b_px) / (float)(dy);
 				while (a1 < a2)
 				{
-					ft_fill_px(data, a1++, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dx
+					ft_fill_px(data, a1, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dx
 					data->color->l_s_r += (unsigned char)(cpt_r);
 					data->color->l_s_g += (unsigned char)(cpt_g);
 					data->color->l_s_b += (unsigned char)(cpt_b);
@@ -156,15 +159,15 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 				{
 					if (-dx >= dy)
 					{
-						cpt_r = (float)(data->color->d_r_px) / (float)(dy);
-						cpt_g = (float)(data->color->d_g_px) / (float)(dy);
-						cpt_b = (float)(data->color->d_b_px) / (float)(dy);
+						cpt_r = (float)(data->color->d_r_px) / (float)(dx);
+						cpt_g = (float)(data->color->d_g_px) / (float)(dx);
+						cpt_b = (float)(data->color->d_b_px) / (float)(dx);
 						e = dx;
 						dx *= 2;
 						dy = (dy * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dy
+							ft_fill_px(data, a1, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dy
 							if ((a1 = (a1 - 1)) == a2)
 								break;
 							if ((e = (e + dy)) >= 0)
@@ -188,7 +191,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 						dx = (dx * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dx
+							ft_fill_px(data, a1, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dx
 							if ((b1 = (b1 + 1)) == b2)
 								break;
 							if ((e = (e + dx)) <= 0)
@@ -206,15 +209,15 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 				{
 					if (dx <= dy)
 					{
-						cpt_r = (float)(data->color->d_r_px) / (float)(dy);
-						cpt_g = (float)(data->color->d_g_px) / (float)(dy);
-						cpt_b = (float)(data->color->d_b_px) / (float)(dy);
+						cpt_r = (float)(data->color->d_r_px) / (float)(dx);
+						cpt_g = (float)(data->color->d_g_px) / (float)(dx);
+						cpt_b = (float)(data->color->d_b_px) / (float)(dx);
 						e = dx;
 						dx *= 2;
 						dy = (dy * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dy
+							ft_fill_px(data, a1, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dy
 							if ((a1 = (a1 - 1)) == a2)
 								break;
 							if ((e = (e - dy)) >= 0)
@@ -237,7 +240,7 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 						dx = (dx * 2);
 						while (1)
 						{
-							ft_fill_px(data, a1, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dx
+							ft_fill_px(data, a1, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dx
 							if ((b1 = (b1 - 1)) == b2)
 								break;
 							if ((e = (e - dx)) >= 0)
@@ -259,10 +262,10 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 				cpt_b = (float)(data->color->d_b_px) / (float)(dy);
 				while (a1 > a2)
 				{
-					ft_fill_px(data, a1--, b1, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dx
-							data->color->l_s_r += (unsigned char)(cpt_r);
-							data->color->l_s_g += (unsigned char)(cpt_g);
-							data->color->l_s_b += (unsigned char)(cpt_b);
+					ft_fill_px(data, a1--, b1, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dx
+					data->color->l_s_r += (unsigned char)(cpt_r);
+					data->color->l_s_g += (unsigned char)(cpt_g);
+					data->color->l_s_b += (unsigned char)(cpt_b);
 				}
 			}
 		}
@@ -273,12 +276,12 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 		{
 			if (dy > 0)
 			{
-				cpt_r = (float)(data->color->d_r_px) / (float)(dy);
-				cpt_g = (float)(data->color->d_g_px) / (float)(dy);
-				cpt_b = (float)(data->color->d_b_px) / (float)(dy);
+				cpt_r = (float)(data->color->d_r_px) / (float)(dx);
+				cpt_g = (float)(data->color->d_g_px) / (float)(dx);
+				cpt_b = (float)(data->color->d_b_px) / (float)(dx);
 				while (b1 < b2)
 				{
-					ft_fill_px(data, a1, b1++, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dy
+					ft_fill_px(data, a1, b1++, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dy
 					data->color->l_s_r += (unsigned char)(cpt_r);
 					data->color->l_s_g += (unsigned char)(cpt_g);
 					data->color->l_s_b += (unsigned char)(cpt_b);
@@ -286,12 +289,12 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 			}
 			else
 			{
-				cpt_r = (float)(data->color->d_r_px) / (float)(dy);
-				cpt_g = (float)(data->color->d_g_px) / (float)(dy);
-				cpt_b = (float)(data->color->d_b_px) / (float)(dy);
+				cpt_r = (float)(data->color->d_r_px) / (float)(dx);
+				cpt_g = (float)(data->color->d_g_px) / (float)(dx);
+				cpt_b = (float)(data->color->d_b_px) / (float)(dx);
 				while (b1 > b2)
 				{
-					ft_fill_px(data, a1, b1--, ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)); // nb_px = dy
+					ft_fill_px(data, a1, b1--, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b))); // nb_px = dy
 					data->color->l_s_r += (unsigned char)(cpt_r);
 					data->color->l_s_g += (unsigned char)(cpt_g);
 					data->color->l_s_b += (unsigned char)(cpt_b);
@@ -299,5 +302,5 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st)
 			}
 		}
 	}
-	ft_fill_px(data, a2, b2, ft_merge_color(data->color->l_e_r, data->color->l_e_g, data->color->l_e_b));
+	ft_fill_px(data, a2, b2, color);
 }

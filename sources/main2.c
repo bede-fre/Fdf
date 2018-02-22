@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/21 17:23:57 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/22 14:39:12 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	ft_display_lst(t_values *data, t_stock *list)
 		while (line)
 		{
 			if (line->n_x)
-				ft_algo(data, line, line->n_x);
+				ft_algo(data, line, line->n_x, line->color);
 			if (line->n_y)
-				ft_algo(data, line, line->n_y);
+				ft_algo(data, line, line->n_y, line->color);
 			line = line->n_x;
 		}
 		col = col->n_y;
@@ -50,17 +50,17 @@ int		ft_deal_key(int key, t_values *data)
 	data->img = mlx_new_image(data->mlx, data->w_win, data->l_win);
 	data->s_px = mlx_get_data_addr(data->img, &data->bpp, &data->sz_ln_px, &data->endian);
 	if (key == 69)
-		data->zoom += 1;
+		data->zoom += 5;
 	if (key == 78)
-		data->zoom -= 1;
+		data->zoom -= 5;
 	if (key == 123)
-		data->w_win -= 10;
+		data->var_x -= 10;
 	if (key == 124)
-		data->w_win += 10;
+		data->var_x += 10;
 	if (key == 125)
-		data->l_win += 10;
+		data->var_y += 10;
 	if (key == 126)
-		data->l_win -= 10;
+		data->var_y -= 10;
 	ft_display_lst(data, data->first_link);
 	if (key == 53)
 	{
@@ -85,10 +85,9 @@ void	ft_fill_px(t_values *data, int x, int y, int color)
 
 	first = (x * (data->bpp) / 8) + (y * data->sz_ln_px);
 	
-	if (first < 0 || x > (data->w_win) || y > (data->l_win))
-	{
+	if (first < 0 || x >= (data->w_win) || y >= (data->l_win) ||
+		x < 0 || y < 0)
 		return ;
-	}
 	data->s_px[first] = (unsigned char)(color);
 	data->s_px[first + 1] = (unsigned char)(color >> 8);
 	data->s_px[first + 2] = (unsigned char)(color >> 16);
@@ -107,12 +106,20 @@ int	main(int ac, char **av)
 		fd = open(av[1], O_RDONLY);
 		data = ft_read_stock(fd, &line);
 		close(fd);
+		data->w_win = 1600;
+		data->l_win = 1200;
+		
+		data->var_x = (int)((data->w_win) / 2.0);
+		data->var_y = (int)((data->l_win) / 2.0);
+		data->zoom = 20;
+
 		if (!(data->color = (t_color*)ft_memalloc(sizeof(t_color))))
 			exit(1);
+		
 		ft_color_range(data);
-
+		
 		ft_compare_color(ft_atoi_base(av[2], 16), ft_atoi_base(av[3], 16), data);
-		ft_gradient_color(data, data->first_link, data->first_link->n_x);
+		//ft_gradient_color(data, data->first_link, data->first_link->n_x);
 		data->mlx = mlx_init();
 		data->win = mlx_new_window(data->mlx, data->w_win, data->l_win, "FdF");
 		data->img = mlx_new_image(data->mlx, data->w_win, data->l_win);

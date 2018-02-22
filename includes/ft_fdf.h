@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/21 17:48:17 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/22 10:52:10 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ typedef struct		s_values
 	int				zoom;
 	double			l_win;
 	double			w_win;
+	int				var_x;
+	int				var_y;
 	short			rate_r;
 	short			rate_g;
 	short			rate_b;
@@ -105,10 +107,10 @@ void				ft_free_lst(t_stock **list);
 void				ft_stock_x_max(t_values *val);
 void				ft_quit_line_more(t_values *val);
 void				ft_quit_line_less(t_values *val);
-void				ft_proj_iso(t_stock *data, t_values *val);
+void				ft_proj_iso(t_stock *lst, t_stock *st, t_values *val);
 void				ft_fill_px(t_values *data, int x, int y, int color);
-void				ft_algo(t_values *data, t_stock *lst, t_stock *st);
-int				ft_merge_color(unsigned char red, unsigned char green, unsigned char blue);
+void				ft_algo(t_values *data, t_stock *lst, t_stock *st, int color);
+int					ft_merge_color(unsigned char red, unsigned char green, unsigned char blue);
 t_values			*ft_read_stock(int fd, char **line);
 
 #endif

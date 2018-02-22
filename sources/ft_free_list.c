@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 13:58:42 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/21 10:24:14 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/22 11:22:38 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,17 @@ void	ft_quit_line_more(t_values *val)
 	}
 }
 
-void	ft_proj_iso(t_stock*data, t_values *val)
+void	ft_proj_iso(t_stock *lst, t_stock *st, t_values *data)
 {
 	double		ang;
 
-	val->w_win = 500;
-	val->l_win = 500;
-	val->zoom = 20;
 	ang = 30.0  * (M_PI/180.0);
-	data->a = ((data->x * cos(ang))
-		+ (data->y * cos(ang + (120.0 * (M_PI/180.0))))
-		+ (data->z * cos(ang - (120.0 * (M_PI/180.0)))));
-	data->b = ((data->x * sin(ang))
-		+ (data->y * sin(ang + (120.0 * (M_PI/180.0))))
-		+ (data->z * sin(ang - (120.0 * (M_PI/180.0)))));
+	lst->a = (int)((((double)lst->x * cos(ang)) + ((double)lst->y * cos(ang + (120.0 * (M_PI/180.0))))
+		+ ((double)lst->z * cos(ang - (120.0 * (M_PI/180.0))))) * (double)(data->zoom) + (double)(data->var_x));
+	lst->b = (int)((((double)lst->x * sin(ang)) + ((double)lst->y * sin(ang + (120.0 * (M_PI/180.0))))
+		+ ((double)lst->z * sin(ang - (120.0 * (M_PI/180.0))))) * (double)(data->zoom) + (double)(data->var_y));
+	st->a = (int)((((double)st->x * cos(ang)) + ((double)st->y * cos(ang + (120.0 * (M_PI/180.0))))
+		+ ((double)st->z * cos(ang - (120.0 * (M_PI/180.0))))) * (double)(data->zoom) + (double)(data->var_x));
+	st->b = (int)((((double)st->x * sin(ang)) + ((double)st->y * sin(ang + (120.0 * (M_PI/180.0))))
+		+ ((double)st->z * sin(ang - (120.0 * (M_PI/180.0))))) * (double)(data->zoom) + (double)(data->var_y));
 }

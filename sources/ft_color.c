@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:51:52 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/21 17:47:37 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/22 12:34:40 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ void		ft_val_z_stock(t_values *val, char **tp)
 	static	int	i;
 
 	if (ft_atol(tp[0]) > 2147483647 || ft_atol(tp[0]) < -2147483648)
-	{
-		
 		exit(1);
-	}
 	if (i++ == 0)
 	{
 		val->z_min = ft_atoi(tp[0]);
@@ -29,11 +26,11 @@ void		ft_val_z_stock(t_values *val, char **tp)
 	else
 	{
 		if (val->z_min < ft_atoi(tp[0]))
-			val->z_min =  val->z_min;
+			val->z_min = val->z_min;
 		else
 			val->z_min = ft_atoi(tp[0]);
 		if(val->z_max > ft_atoi(tp[0]))
-			val->z_max =  val->z_max;
+			val->z_max = val->z_max;
 		else
 			val->z_max = ft_atoi(tp[0]);
 	}
@@ -46,12 +43,17 @@ void	ft_color_range(t_values *val)
 
 	i = 0;
 	tp = val->z_min;
-	while (tp != val->z_max)
+	if (tp == val->z_max)
+		val->z_range = 1;
+	else
 	{
-		tp++;
-		i++;
+		while (tp != val->z_max)
+		{
+			tp++;
+			i++;
+		}
+		val->z_range = i;
 	}
-	val->z_range = i;
 }
 
 void		ft_compare_color(int cl1, int cl2, t_values *val)
@@ -67,9 +69,9 @@ void		ft_compare_color(int cl1, int cl2, t_values *val)
 	val->color->b2 = (unsigned char)(cl2);
 	
 	// RGB Delta Color End - Depart
-	val->color->d_r = val->color->r2 - val->color->r1;
-	val->color->d_g = val->color->g2 - val->color->g1;
-	val->color->d_b = val->color->b2 - val->color->b1;
+	val->color->d_r = (short)(val->color->r2 - val->color->r1);
+	val->color->d_g = (short)(val->color->g2 - val->color->g1);
+	val->color->d_b = (short)(val->color->b2 - val->color->b1);
 }
 
 void		ft_gradient_color(t_values *val, t_stock *lst, t_stock *next)
@@ -77,14 +79,12 @@ void		ft_gradient_color(t_values *val, t_stock *lst, t_stock *next)
 	float l_s;
 	float l_e;
 
-	
 	// Start link
 	l_s = ((float)(lst->z - val->z_min) / (float)val->z_range);
-	
+
 	// End link
 	l_e = ((float)(next->z - val->z_min) / (float)val->z_range);
-	
-	
+
 	// RGB recalculate for start link
 	val->color->l_s_r = (int)((float)((val->color->r1) + ((float)(val->color->d_r) * l_s)));
 	val->color->l_s_g = (int)((float)((val->color->g1) + ((float)(val->color->d_g) * l_s)));
@@ -94,17 +94,11 @@ void		ft_gradient_color(t_values *val, t_stock *lst, t_stock *next)
 	val->color->l_e_r = (int)((float)((val->color->r2) + ((float)(val->color->d_r) * l_e)));
 	val->color->l_e_g = (int)((float)((val->color->g2) + ((float)(val->color->d_g) * l_e)));
 	val->color->l_e_b = (int)((float)((val->color->b2) + ((float)(val->color->d_b) * l_e)));
-	
+
 	// Delta RGB for pixel start link and pixel end link
 	val->color->d_r_px = (short)(val->color->l_e_r - val->color->l_s_r);
 	val->color->d_g_px = (short)(val->color->l_e_g - val->color->l_s_g);
 	val->color->d_b_px = (short)(val->color->l_e_b - val->color->l_s_b);
-	
-	ft_putnbr(val->color->d_r_px);
-	ft_putchar(' ');
-	ft_putnbr(val->color->d_g_px);
-	ft_putchar(' ');
-	ft_putnbr(val->color->d_b_px);
 }
 
 
