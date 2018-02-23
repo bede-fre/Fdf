@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/22 16:33:58 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/23 16:45:13 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct		s_values
 	int				endian;
 	int				bpp;
 	int				sz_ln_px;
-	int				zoom;
+	double			zoom;
 	double			l_win;
 	double			w_win;
 	int				var_x;
@@ -99,12 +99,13 @@ typedef struct		s_values
 	t_stock			*tp_y;
 	t_stock			*tp_x;
 	t_stock			*first_link;
+	t_stock			*middle_link;
 	t_stock			*first_x;
 	t_color			*color;
 }					t_values;
 
 
-
+void				ft_find_middle_link(t_values *data, t_stock *lst);
 void				ft_compare_color(int cl1, int cl2, t_values *val);
 void				ft_gradient_color(t_values *val, t_stock *lst, t_stock *next);
 void				ft_val_z_stock(t_values *val, char **tp);

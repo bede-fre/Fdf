@@ -6,12 +6,13 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 13:28:36 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/22 18:26:02 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/23 15:28:32 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
+/*
 void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 {
 	int		dx;
@@ -312,39 +313,77 @@ void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)
 	}
 	ft_fill_px(data, a2, b2, color);
 }
+*/
 
 
+void	ft_algo(t_values *data, t_stock *lst, t_stock *st, int color)  //  int xi,int yi,int xf,int yf
+{
+	int		da;
+	int		db;
+	int		i;
+	int		cpta;
+	int		cptb;
+	int		cumul;
+	int		a;
+	int		b;
+	float	cpt_r;
+	float	cpt_g;
+	float	cpt_b;
 
-
-
-/*
-void ligne(int xi,int yi,int xf,int yf) {
-  int dx,dy,i,xinc,yinc,cumul,x,y ;
-  x = xi ;
-  y = yi ;
-  dx = xf - xi ;
-  dy = yf - yi ;
-  xinc = ( dx > 0 ) ? 1 : -1 ;
-  yinc = ( dy > 0 ) ? 1 : -1 ;
-  dx = abs(dx) ;
-  dy = abs(dy) ;
-  allume_pixel(x,y) ;
-  if ( dx > dy ) {
-    cumul = dx / 2 ;
-    for ( i = 1 ; i <= dx ; i++ ) {
-      x += xinc ;
-      cumul += dy ;
-      if ( cumul >= dx ) {
-        cumul -= dx ;
-        y += yinc ; }
-      allume_pixel(x,y) ; } }
-    else {
-    cumul = dy / 2 ;
-    for ( i = 1 ; i <= dy ; i++ ) {
-      y += yinc ;
-      cumul += dx ;
-      if ( cumul >= dy ) {
-        cumul -= dy ;
-        x += xinc ; }
-      allume_pixel(x,y) ; } }
-}*/
+	ft_gradient_color(data, lst, st);
+	ft_proj_iso(lst, st, data);
+	a = lst->a;
+	b = lst->b;
+	da = st->a - a;
+	db = st->b - b;
+	cpta = (da > 0) ? 1 : -1;
+	cptb = (db > 0)  ? 1 : -1;
+	da = ft_abs(da);
+	db = ft_abs(db);
+	cpt_r = (float)(data->color->d_r_px) / (float)(da);
+	cpt_g = (float)(data->color->d_g_px) / (float)(da);
+	cpt_b = (float)(data->color->d_b_px) / (float)(da);
+	ft_fill_px(data, a, b, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)));
+	if (da > db)
+	{
+		cpt_r = (float)(data->color->d_r_px) / (float)(da);
+		cpt_g = (float)(data->color->d_g_px) / (float)(da);
+		cpt_b = (float)(data->color->d_b_px) / (float)(da);
+		cumul = da / 2;
+		for (i = 1 ; i <= da ; i++)
+		{
+			a += cpta;
+			cumul += db;
+			if (cumul >= da)
+			{
+				cumul -= da;
+				b += cptb;
+			}
+			ft_fill_px(data, a, b, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)));
+			data->color->l_s_r += (short)(cpt_r);
+			data->color->l_s_g += (short)(cpt_g);
+			data->color->l_s_b += (short)(cpt_b);
+		}
+	}
+	else
+	{
+		cpt_r = (float)(data->color->d_r_px) / (float)(db);
+		cpt_g = (float)(data->color->d_g_px) / (float)(db);
+		cpt_b = (float)(data->color->d_b_px) / (float)(db);
+		cumul = db / 2;
+		for (i = 1 ; i <= db ; i++)
+		{
+					b += cptb;
+			cumul += da;
+			if (cumul >= db)
+			{
+				cumul -= db;
+				a += cpta;
+			}
+			ft_fill_px(data, a, b, (color != (int)(NULL) ? color : ft_merge_color(data->color->l_s_r, data->color->l_s_g, data->color->l_s_b)));
+			data->color->l_s_r += (short)(cpt_r);
+			data->color->l_s_g += (short)(cpt_g);
+			data->color->l_s_b += (short)(cpt_b);
+		}
+	}
+}

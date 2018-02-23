@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/22 15:34:40 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/02/23 16:44:46 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ft_close_win(int key, t_values *data)
 void	ft_display_lst(t_values *data, t_stock *list)
 {
 	t_stock	*line;
-	t_stock *col;
+	t_stock	*col;
 
 	col = list;
 	while (col)
@@ -94,6 +94,18 @@ void	ft_fill_px(t_values *data, int x, int y, int color)
 	data->s_px[first + 3] = (unsigned char)(color >> 24);
 }
 
+void	ft_find_middle_link(t_values *data, t_stock *lst)
+{
+	t_stock *tp;
+
+	tp = lst;
+	while ((tp->x) < (data->x_max / 2))
+		tp = tp->n_x;
+	while ((tp->y) < (data->y_max / 2))
+		tp = tp->n_y;
+	data->middle_link = tp;
+}
+
 int	main(int ac, char **av)
 {
 	int			fd;
@@ -108,10 +120,13 @@ int	main(int ac, char **av)
 		close(fd);
 		data->w_win = 1600;
 		data->l_win = 1200;
+		ft_find_middle_link(data, data->first_link);
 		
 		data->var_x = (int)((data->w_win) / 2.0);
 		data->var_y = (int)((data->l_win) / 2.0);
-		data->zoom = 40;
+		
+		data->zoom = 1.0;
+		
 
 		if (!(data->color = (t_color*)ft_memalloc(sizeof(t_color))))
 			exit(1);
