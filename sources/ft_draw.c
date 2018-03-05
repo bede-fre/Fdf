@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:42:53 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 15:49:34 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/05 16:37:20 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ft_size_window(t_values *val, char *len, char *wid)
 	val->draw.w_win = (double)(ft_atoi(wid));
 	val->draw.var_x = (int)(val->draw.l_win / 2.0);
 	val->draw.var_y = (int)(val->draw.w_win / 2.0);
-	val->draw.zoom = 10.0;
+	val->draw.zoom = 1.0;
+	val->draw.r = 0.0 * (M_PI / 180.0);
 }
 
 void	ft_display(t_values *val, t_stock *list)
@@ -63,6 +64,10 @@ int		ft_deal_key(int key, t_values *val)
 		val->draw.var_y += 10;
 	if (key == 126)
 		val->draw.var_y -= 10;
+	if (key == 0)
+		val->draw.r -= 10.0 * (M_PI / 180.0);
+	if (key == 2)
+		val->draw.r += 10.0 * (M_PI / 180.0);
 	ft_display(val, val->first_link);
 	if (key == 53)
 	{

@@ -6,7 +6,7 @@
 #    By: bede-fre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 12:44:25 by bede-fre          #+#    #+#              #
-#    Updated: 2018/03/05 16:01:04 by bede-fre         ###   ########.fr        #
+#    Updated: 2018/03/05 16:56:11 by bede-fre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC = sources/main.c sources/ft_free_list.c sources/ft_read_stock.c \
 	sources/ft_draw.c
 INCLUDES = ./includes
 LIBFT = ./libft/libft.a
+MINILIBX = ./minilibx/libmlx.a
 OBJ = $(SRC:.c=.o)
 FLAGS = -Wall -Wextra -Werror -g
 
@@ -36,15 +37,18 @@ _BACK		=$ \033[8
 _HIDE_CURS	=$ \033[?25l
 _SHOW_CURS	=$ \033[?25h
 
-.PHONY: all libft clean fclean re
+.PHONY: all libft minilibx clean fclean re
 
-all: libft $(NAME)
+all: libft minilibx $(NAME)
 
 libft:
 	@make -C libft
 
+minilibx:
+	@make -C minilibx
+
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) -lmlx -framework OpenGL -framework Appkit $(OBJ) $(LIBFT) -o $(NAME)
+	@$(CC) $(FLAGS) -framework OpenGL -framework Appkit $(OBJ) $(MINILIBX) $(LIBFT) -o $(NAME)
 	@printf "$(_CLEAR)$(_CYAN)# EXECUTABLE FILE CREATION # $(_GREEN)fdf\n$(_END)"
 	@printf "$(_GREEN)# EXECUTABLE FILE CREATED #\n$(_END)$(_SHOW_CURS)"
 
@@ -56,6 +60,7 @@ $(NAME): $(OBJ)
 
 clean:
 	@make -C libft clean
+	@make -C minilibx clean
 	@/bin/rm -f $(OBJ)
 	@printf "$(_RED)# DELETE EXECUTABLE OBJECT FILES #\n$(_END)"
 

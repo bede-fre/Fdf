@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 15:48:54 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/05 17:00:31 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 # define FT_FDF_H
 
 # include "libft.h"
-# include <mlx.h>
+# include "mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-
-
-
-# include <stdio.h>
 
 # define WHITE 0xFFFFFF
 # define CARROT_ORANGE 0xE58E26
@@ -93,6 +89,7 @@ typedef struct		s_draw
 	double			w_win;
 	int				var_x;
 	int				var_y;
+	double			r;
 }					t_draw;
 
 typedef struct		s_values
@@ -107,7 +104,6 @@ typedef struct		s_values
 	t_stock			*tp_y;
 	t_stock			*tp_x;
 	t_stock			*first_link;
-	t_stock			*middle_link;
 	t_stock			*first_x;
 	t_col			col;
 	t_algo			algo;
