@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:42:53 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 16:37:20 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/05 18:03:33 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,29 @@ void	ft_display(t_values *val, t_stock *list)
 		line = col;
 		while (line)
 		{
-			if (line->n_x)
-				ft_algo(val, line, line->n_x, line->color);
-			if (line->n_y)
-				ft_algo(val, line, line->n_y, line->color);
-			line = line->n_x;
+			if ((val->draw.r > 46.0 * (M_PI / 180.0)) &&
+				(val->draw.r < 225.0 * (M_PI / 180.00)))
+			{
+				if (line->p_x)
+					ft_algo(val, line, line->p_x, line->color);
+				if (line->p_y)
+					ft_algo(val, line, line->p_y, line->color);
+				line = line->p_x;
+			}
+			else
+			{
+				if (line->n_x)
+					ft_algo(val, line, line->n_x, line->color);
+				if (line->n_y)
+					ft_algo(val, line, line->n_y, line->color);
+				line = line->n_x;
+			}
 		}
-		col = col->n_y;
+		if ((val->draw.r > 46.0 * (M_PI / 180.0))
+			&& (val->draw.r < 225.0 * (M_PI / 180.00)))
+			col = col->p_y;
+		else
+			col = col->n_y;
 	}
 	mlx_put_image_to_window(val->draw.mlx, val->draw.win, val->draw.img, 0, 0);
 }
@@ -65,10 +81,24 @@ int		ft_deal_key(int key, t_values *val)
 	if (key == 126)
 		val->draw.var_y -= 10;
 	if (key == 0)
-		val->draw.r -= 10.0 * (M_PI / 180.0);
+	{
+		if (val->draw.r > 0.0 * (M_PI / 180.0))
+			val->draw.r -= 10.0 * (M_PI / 180.0);
+		else
+			val->draw.r = 350.0 * (M_PI / 180.0);
+	}
 	if (key == 2)
-		val->draw.r += 10.0 * (M_PI / 180.0);
-	ft_display(val, val->first_link);
+	{
+		if (val->draw.r < 350.0 * (M_PI / 180.0))
+			val->draw.r += 10.0 * (M_PI / 180.0);
+		else
+			val->draw.r = 0.0 * (M_PI / 180.0);
+	}
+	if ((val->draw.r > 46.0 * (M_PI / 180.0))
+		&& (val->draw.r < 225.0 * (M_PI / 180.00)))
+		ft_display(val, val->last_link);
+	else
+		ft_display(val, val->first_link);
 	if (key == 53)
 	{
 		ft_free_lst(&val->first_link);

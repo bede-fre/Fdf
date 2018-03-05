@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 15:31:19 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/05 18:02:05 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,12 @@ t_values		*ft_read_stock(int fd, char **line)
 		ft_stock(val, data, line);
 		(val->cl)++;
 		val->tp_y = val->first_x;
-		data = val->first_x;
 		free(*line);
 		ft_stock_x_max(val);
 	}
+	while (data->n_x)
+		data = data->n_x;
+	val->last_link = data;
 	val->y_max = val->cl;
 	return (val);
 }

@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 17:00:31 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/05 17:18:45 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct		s_values
 	t_stock			*tp_y;
 	t_stock			*tp_x;
 	t_stock			*first_link;
+	t_stock			*last_link;
 	t_stock			*first_x;
 	t_col			col;
 	t_algo			algo;
