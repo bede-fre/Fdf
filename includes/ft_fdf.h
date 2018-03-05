@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/23 16:45:13 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/05 15:48:54 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@
 
 # include <stdio.h>
 
-
 # define WHITE 0xFFFFFF
 # define CARROT_ORANGE 0xE58E26
 # define JALAPENO_RED 0xB71540
 # define AZRAQ_BLUE 0x4A69BD
 # define DUPAIN 0x60A3BC
 # define REEF_ENCOUNTER 0x079992
-# define ZOOM 1
 
 typedef struct		s_stock
 {
@@ -47,7 +45,7 @@ typedef struct		s_stock
 	struct s_stock	*p_y;
 }					t_stock;
 
-typedef struct		s_color
+typedef struct		s_col
 {
 	unsigned char	r1;
 	unsigned char	g1;
@@ -67,20 +65,22 @@ typedef struct		s_color
 	unsigned char	l_e_r;
 	unsigned char	l_e_g;
 	unsigned char	l_e_b;
-	short			d_r_px;
-	short			d_g_px;
-	short			d_b_px;
-}					t_color;
+}					t_col;
 
-typedef struct		s_values
+typedef struct		s_algo
 {
-	int				x_max;
-	int				y_max;
-	int				ln;
-	int				cl;
-	int				z_min;
-	int				z_max;
-	int				z_range;
+	int				da;
+	int				db;
+	int				i;
+	int				cpta;
+	int				cptb;
+	int				cumul;
+	int				a;
+	int				b;
+}					t_algo;
+
+typedef struct		s_draw
+{
 	void			*mlx;
 	void			*win;
 	void			*img;
@@ -93,19 +93,32 @@ typedef struct		s_values
 	double			w_win;
 	int				var_x;
 	int				var_y;
-	short			rate_r;
-	short			rate_g;
-	short			rate_b;
+}					t_draw;
+
+typedef struct		s_values
+{
+	int				x_max;
+	int				y_max;
+	int				ln;
+	int				cl;
+	int				z_min;
+	int				z_max;
+	int				z_range;
 	t_stock			*tp_y;
 	t_stock			*tp_x;
 	t_stock			*first_link;
 	t_stock			*middle_link;
 	t_stock			*first_x;
-	t_color			*color;
+	t_col			col;
+	t_algo			algo;
+	t_draw			draw;
 }					t_values;
 
-
-void				ft_find_middle_link(t_values *data, t_stock *lst);
+void				ft_size_window(t_values *val, char *len, char *wid);
+void				ft_display(t_values *val, t_stock *list);
+int					ft_deal_key(int key, t_values *val);
+void				ft_fill_px(t_values *val, int x, int y, int color);
+void				ft_find_middle_link(t_values *val, t_stock *lst);
 void				ft_compare_color(int cl1, int cl2, t_values *val);
 void				ft_gradient_color(t_values *val, t_stock *lst, t_stock *next);
 void				ft_val_z_stock(t_values *val, char **tp);
@@ -115,8 +128,8 @@ void				ft_stock_x_max(t_values *val);
 void				ft_quit_line_more(t_values *val);
 void				ft_quit_line_less(t_values *val);
 void				ft_proj_iso(t_stock *lst, t_stock *st, t_values *val);
-void				ft_fill_px(t_values *data, int x, int y, int color);
-void				ft_algo(t_values *data, t_stock *lst, t_stock *st, int color);
+void				ft_fill_px(t_values *val, int x, int y, int color);
+void				ft_algo(t_values *val, t_stock *lst, t_stock *st, int color);
 int					ft_merge_color(unsigned char red, unsigned char green, unsigned char blue);
 t_values			*ft_read_stock(int fd, char **line);
 

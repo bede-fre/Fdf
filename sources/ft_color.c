@@ -6,13 +6,13 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:51:52 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/02/22 16:43:53 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/05 15:21:49 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-void		ft_val_z_stock(t_values *val, char **tp)
+void	ft_val_z_stock(t_values *val, char **tp)
 {
 	static	int	i;
 
@@ -29,7 +29,7 @@ void		ft_val_z_stock(t_values *val, char **tp)
 			val->z_min = val->z_min;
 		else
 			val->z_min = ft_atoi(tp[0]);
-		if(val->z_max > ft_atoi(tp[0]))
+		if (val->z_max > ft_atoi(tp[0]))
 			val->z_max = val->z_max;
 		else
 			val->z_max = ft_atoi(tp[0]);
@@ -56,78 +56,51 @@ void	ft_color_range(t_values *val)
 	}
 }
 
-void		ft_compare_color(int cl1, int cl2, t_values *val)
+void	ft_compare_color(int cl1, int cl2, t_values *val)
 {
-	// RGB Depart Color
-	val->color->r1 = (unsigned char)(cl1 >> 16);
-	val->color->g1 = (unsigned char)(cl1 >> 8);
-	val->color->b1 = (unsigned char)(cl1);
-	
-	// RGB End Color
-	val->color->r2 = (unsigned char)(cl2 >> 16);
-	val->color->g2 = (unsigned char)(cl2 >> 8);
-	val->color->b2 = (unsigned char)(cl2);
-	
-	// RGB Delta Color End - Depart
-	val->color->d_r1 = (short)(val->color->r2 - val->color->r1);
-	val->color->d_g1 = (short)(val->color->g2 - val->color->g1);
-	val->color->d_b1 = (short)(val->color->b2 - val->color->b1);
-
-	// RGB Delta Color Depart - End
-	val->color->d_r2 = (short)(val->color->r1 - val->color->r2);
-	val->color->d_g2 = (short)(val->color->g1 - val->color->g2);
-	val->color->d_b2 = (short)(val->color->b1 - val->color->b2);
+	val->col.r1 = (unsigned char)(cl1 >> 16);
+	val->col.g1 = (unsigned char)(cl1 >> 8);
+	val->col.b1 = (unsigned char)(cl1);
+	val->col.r2 = (unsigned char)(cl2 >> 16);
+	val->col.g2 = (unsigned char)(cl2 >> 8);
+	val->col.b2 = (unsigned char)(cl2);
+	val->col.d_r1 = (short)(val->col.r2 - val->col.r1);
+	val->col.d_g1 = (short)(val->col.g2 - val->col.g1);
+	val->col.d_b1 = (short)(val->col.b2 - val->col.b1);
+	val->col.d_r2 = (short)(val->col.r1 - val->col.r2);
+	val->col.d_g2 = (short)(val->col.g1 - val->col.g2);
+	val->col.d_b2 = (short)(val->col.b1 - val->col.b2);
 }
 
-void		ft_gradient_color(t_values *val, t_stock *lst, t_stock *next)
+void	ft_gradient_color(t_values *val, t_stock *lst, t_stock *next)
 {
 	float l_s;
 	float l_e;
-	
+
 	if (lst->z >= next->z)
 	{
-		// start link
 		l_s = ((float)(lst->z - val->z_min) / (float)val->z_range);
-
-		// end link
-		l_e = ((float)(next->z - val->z_min) / (float)val->z_range);
-
-		// RGB recalculate for start link
-		val->color->l_s_r = (int)((float)((val->color->r1) + ((float)(val->color->d_r1) * l_s)));
-		val->color->l_s_g = (int)((float)((val->color->g1) + ((float)(val->color->d_g1) * l_s)));
-		val->color->l_s_b = (int)((float)((val->color->b1) + ((float)(val->color->d_b1) * l_s)));
-
-		// RGB recalculate for end link
-		val->color->l_e_r = (int)((float)((val->color->r1) + ((float)(val->color->d_r1) * l_e)));
-		val->color->l_e_g = (int)((float)((val->color->g1) + ((float)(val->color->d_g1) * l_e)));
-		val->color->l_e_b = (int)((float)((val->color->b1) + ((float)(val->color->d_b1) * l_e)));
+		val->col.l_s_r = (int)((float)((val->col.r1)
+			+ ((float)(val->col.d_r1) * l_s)));
+		val->col.l_s_g = (int)((float)((val->col.g1)
+			+ ((float)(val->col.d_g1) * l_s)));
+		val->col.l_s_b = (int)((float)((val->col.b1)
+			+ ((float)(val->col.d_b1) * l_s)));
 	}
 	else
 	{
-		// start link
-		l_s = ((float)(lst->z + val->z_min) / (float)val->z_range);
-
-		// end link
-		l_e = ((float)(next->z + val->z_min) / (float)val->z_range);
-// RGB recalculate for start link
-		val->color->l_s_r = (int)((float)((val->color->r2) + ((float)(val->color->d_r2) * l_s)));
-		val->color->l_s_g = (int)((float)((val->color->g2) + ((float)(val->color->d_g2) * l_s)));
-		val->color->l_s_b = (int)((float)((val->color->b2) + ((float)(val->color->d_b2) * l_s)));
-
-		// RGB recalculate for end link
-		val->color->l_e_r = (int)((float)((val->color->r2) + ((float)(val->color->d_r2) * l_e)));
-		val->color->l_e_g = (int)((float)((val->color->g2) + ((float)(val->color->d_g2) * l_e)));
-		val->color->l_e_b = (int)((float)((val->color->b2) + ((float)(val->color->d_b2) * l_e)));
+		l_e = ((float)(next->z - val->z_max) / (float)val->z_range);
+		val->col.l_s_r = (int)((float)((val->col.r2)
+			- ((float)(val->col.d_r2) * l_e)));
+		val->col.l_s_g = (int)((float)((val->col.g2)
+			- ((float)(val->col.d_g2) * l_e)));
+		val->col.l_s_b = (int)((float)((val->col.b2)
+			- ((float)(val->col.d_b2) * l_e)));
 	}
-
-	// Delta RGB for pixel start link and pixel end link
-	val->color->d_r_px = (short)(val->color->l_e_r - val->color->l_s_r);
-	val->color->d_g_px = (short)(val->color->l_e_g - val->color->l_s_g);
-	val->color->d_b_px = (short)(val->color->l_e_b - val->color->l_s_b);
 }
 
-
-int			ft_merge_color(unsigned char red, unsigned char green, unsigned char blue)
+int		ft_merge_color(unsigned char red, unsigned char green,
+			unsigned char blue)
 {
 	return ((int)(red << 16) | (int)(green << 8) | (int)(blue));
 }
