@@ -6,20 +6,21 @@
 #    By: bede-fre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 12:44:25 by bede-fre          #+#    #+#              #
-#    Updated: 2018/03/06 14:09:32 by bede-fre         ###   ########.fr        #
+#    Updated: 2018/03/06 14:23:40 by bede-fre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
-CC = clang
-SRC = sources/main.c sources/ft_free_error_iso_proj.c sources/ft_read_stock.c \
-	sources/ft_segment_tracer.c sources/ft_color.c \
-	sources/ft_draw.c
-INCLUDES = ./includes
-LIBFT = ./libft/libft.a
-MINILIBX = ./minilibx/libmlx.a
-OBJ = $(SRC:.c=.o)
-FLAGS = -Wall -Wextra -Werror -g
+NAME		= fdf
+CC 		= clang
+SRC 		= 	sources/ft_read_stock.c sources/ft_segment_tracer.c \
+				sources/ft_color.c \
+				sources/ft_draw.c sources/main.c \
+				sources/ft_free_error_iso_proj.c
+INCLUDES	= ./includes
+LIBFT		= ./libft/libft.a
+MINILIBX	= ./minilibx/libmlx.a
+OBJ		= $(SRC:.c=.o)
+FLAGS		= -Wall -Wextra -Werror
 
 _GREY		=$ \033[30m
 _RED		=$ \033[31m
@@ -56,7 +57,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(FLAGS) -I $(INCLUDES) -c $^ -o $@
 	@printf "$(_CLEAR)$(_CYAN)# EXECUTABLE FILE CREATION # $(_END)"
 	@printf "$(_YELLOW)$@$(_END)"
-	@printf "$(_HIDE_CURS)\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
+	@printf "$(_HIDE_CURS)\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
 
 clean:
 	@make -C libft clean
