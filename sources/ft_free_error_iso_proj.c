@@ -6,13 +6,13 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 13:58:42 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 18:01:09 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/06 13:55:32 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-void	ft_free_lst(t_stock **list)
+void		ft_free_lst(t_stock **list)
 {
 	t_stock	*lst;
 	t_stock	*line;
@@ -32,39 +32,31 @@ void	ft_free_lst(t_stock **list)
 	}
 }
 
-void	ft_stock_x_max(t_values *val)
-{
-	static int	first;
-
-	if (first++ == 0)
-		val->x_max = val->ln;
-}
-
-void	ft_quit_line_less(t_values *val)
-{
-	if (val->ln < val->x_max)
-	{
-		if (val->x_max > val->ln)
-		{
-			ft_free_lst(&val->first_link);
-			exit(1);
-		}
-	}
-}
-
-void	ft_quit_line_more(t_values *val)
+void		ft_quit_line_more(t_values *val)
 {
 	if (val->x_max != 0)
 	{
 		if (val->ln >= val->x_max)
 		{
 			ft_free_lst(&val->first_link);
-			exit(1);
+			ft_error("Wrong line length");
 		}
 	}
 }
 
-void	ft_proj_iso(t_stock *lst, t_stock *st, t_values *val)
+void		ft_quit_line_less(t_values *val)
+{
+	if (val->ln < val->x_max)
+	{
+		if (val->x_max > val->ln)
+		{
+			ft_free_lst(&val->first_link);
+			ft_error("Wrong line length");
+		}
+	}
+}
+
+static void	ft_iso_link(t_values *val, t_stock *lst)
 {
 	double ang;
 	double x;
@@ -89,21 +81,10 @@ void	ft_proj_iso(t_stock *lst, t_stock *st, t_values *val)
 	lst->b += val->draw.var_y;
 	lst->x += (val->x_max) / 2;
 	lst->y += (val->y_max) / 2;
-	st->x -= (val->x_max) / 2;
-	st->y -= (val->y_max) / 2;
-	x = (double)st->x * cos(val->draw.r) - (double)st->y * sin(val->draw.r);
-	y = (double)st->x * sin(val->draw.r) + (double)st->y * cos(val->draw.r);
-	z = (double)st->z;
-	st->a = (int)(((x * cos(ang))
-		+ (y * cos(ang + (120.0 * (M_PI / 180.0))))
-		+ (z * cos(ang - (120.0 * (M_PI / 180.0)))))
-		* val->draw.zoom);
-	st->a += val->draw.var_x;
-	st->b = (int)(((x * sin(ang))
-		+ (y * sin(ang + (120.0 * (M_PI / 180.0))))
-		+ (z * sin(ang - (120.0 * (M_PI / 180.0)))))
-		* val->draw.zoom);
-	st->b += val->draw.var_y;
-	st->x += (val->x_max) / 2;
-	st->y += (val->y_max) / 2;
+}
+
+void		ft_proj_iso(t_stock *lst, t_stock *st, t_values *val)
+{
+	ft_iso_link(val, lst);
+	ft_iso_link(val, st);
 }

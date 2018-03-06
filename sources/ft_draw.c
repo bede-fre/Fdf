@@ -6,23 +6,13 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:42:53 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 18:03:33 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/06 13:28:17 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-void	ft_size_window(t_values *val, char *len, char *wid)
-{
-	val->draw.l_win = (double)(ft_atoi(len));
-	val->draw.w_win = (double)(ft_atoi(wid));
-	val->draw.var_x = (int)(val->draw.l_win / 2.0);
-	val->draw.var_y = (int)(val->draw.w_win / 2.0);
-	val->draw.zoom = 1.0;
-	val->draw.r = 0.0 * (M_PI / 180.0);
-}
-
-void	ft_display(t_values *val, t_stock *list)
+void		ft_display(t_values *val, t_stock *list)
 {
 	t_stock	*line;
 	t_stock	*col;
@@ -33,41 +23,41 @@ void	ft_display(t_values *val, t_stock *list)
 		line = col;
 		while (line)
 		{
-			if ((val->draw.r > 46.0 * (M_PI / 180.0)) &&
-				(val->draw.r < 225.0 * (M_PI / 180.00)))
-			{
-				if (line->p_x)
-					ft_algo(val, line, line->p_x, line->color);
-				if (line->p_y)
-					ft_algo(val, line, line->p_y, line->color);
-				line = line->p_x;
-			}
-			else
-			{
-				if (line->n_x)
-					ft_algo(val, line, line->n_x, line->color);
-				if (line->n_y)
-					ft_algo(val, line, line->n_y, line->color);
-				line = line->n_x;
-			}
+			if (line->n_x)
+				ft_algo(val, line, line->n_x, line->color);
+			if (line->n_y)
+				ft_algo(val, line, line->n_y, line->color);
+			line = line->n_x;
 		}
-		if ((val->draw.r > 46.0 * (M_PI / 180.0))
-			&& (val->draw.r < 225.0 * (M_PI / 180.00)))
-			col = col->p_y;
-		else
-			col = col->n_y;
+		col = col->n_y;
 	}
 	mlx_put_image_to_window(val->draw.mlx, val->draw.win, val->draw.img, 0, 0);
 }
 
-int		ft_deal_key(int key, t_values *val)
+static void	ft_rev_display(t_values *val, t_stock *list)
 {
-	mlx_clear_window(val->draw.mlx, val->draw.win);
-	mlx_destroy_image(val->draw.mlx, val->draw.img);
-	val->draw.img = mlx_new_image(val->draw.mlx, val->draw.w_win,
-		val->draw.l_win);
-	val->draw.s_px = mlx_get_data_addr(val->draw.img, &val->draw.bpp,
-		&val->draw.sz_ln_px, &val->draw.endian);
+	t_stock	*line;
+	t_stock	*col;
+
+	col = list;
+	while (col)
+	{
+		line = col;
+		while (line)
+		{
+			if (line->p_x)
+				ft_algo(val, line, line->p_x, line->color);
+			if (line->p_y)
+				ft_algo(val, line, line->p_y, line->color);
+			line = line->p_x;
+		}
+		col = col->p_y;
+	}
+	mlx_put_image_to_window(val->draw.mlx, val->draw.win, val->draw.img, 0, 0);
+}
+
+static void	ft_move_zoom(int key, t_values *val)
+{
 	if (key == 69)
 		val->draw.zoom += 5;
 	if (key == 78)
@@ -80,6 +70,10 @@ int		ft_deal_key(int key, t_values *val)
 		val->draw.var_y += 10;
 	if (key == 126)
 		val->draw.var_y -= 10;
+}
+
+static void	ft_rotate(int key, t_values *val)
+{
 	if (key == 0)
 	{
 		if (val->draw.r > 0.0 * (M_PI / 180.0))
@@ -94,9 +88,24 @@ int		ft_deal_key(int key, t_values *val)
 		else
 			val->draw.r = 0.0 * (M_PI / 180.0);
 	}
+}
+
+int			ft_deal_key(int key, t_values *val)
+{
+	mlx_clear_window(val->draw.mlx, val->draw.win);
+	mlx_destroy_image(val->draw.mlx, val->draw.img);
+	val->draw.img = mlx_new_image(val->draw.mlx, val->draw.w_win,
+		val->draw.l_win);
+	val->draw.s_px = mlx_get_data_addr(val->draw.img, &val->draw.bpp,
+		&val->draw.sz_ln_px, &val->draw.endian);
+	if (key == 69 || key == 78 || key == 123 || key == 124 || key == 125
+		|| key == 126)
+		ft_move_zoom(key, val);
+	if (key == 0 || key == 2)
+		ft_rotate(key, val);
 	if ((val->draw.r > 46.0 * (M_PI / 180.0))
 		&& (val->draw.r < 225.0 * (M_PI / 180.00)))
-		ft_display(val, val->last_link);
+		ft_rev_display(val, val->last_link);
 	else
 		ft_display(val, val->first_link);
 	if (key == 53)
@@ -105,18 +114,4 @@ int		ft_deal_key(int key, t_values *val)
 		exit(0);
 	}
 	return (0);
-}
-
-void	ft_fill_px(t_values *val, int x, int y, int color)
-{
-	int		first;
-
-	first = (x * (val->draw.bpp) / 8) + (y * val->draw.sz_ln_px);
-	if (first < 0 || x >= (val->draw.w_win) || y >= (val->draw.l_win) ||
-		x < 0 || y < 0)
-		return ;
-	val->draw.s_px[first] = (unsigned char)(color);
-	val->draw.s_px[first + 1] = (unsigned char)(color >> 8);
-	val->draw.s_px[first + 2] = (unsigned char)(color >> 16);
-	val->draw.s_px[first + 3] = (unsigned char)(color >> 24);
 }

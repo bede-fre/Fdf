@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:51:52 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 15:21:49 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/06 13:38:57 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_val_z_stock(t_values *val, char **tp)
 	static	int	i;
 
 	if (ft_atol(tp[0]) > 2147483647 || ft_atol(tp[0]) < -2147483648)
-		exit(1);
+		ft_error("Overflow : z value");
 	if (i++ == 0)
 	{
 		val->z_min = ft_atoi(tp[0]);
@@ -54,22 +54,6 @@ void	ft_color_range(t_values *val)
 		}
 		val->z_range = i;
 	}
-}
-
-void	ft_compare_color(int cl1, int cl2, t_values *val)
-{
-	val->col.r1 = (unsigned char)(cl1 >> 16);
-	val->col.g1 = (unsigned char)(cl1 >> 8);
-	val->col.b1 = (unsigned char)(cl1);
-	val->col.r2 = (unsigned char)(cl2 >> 16);
-	val->col.g2 = (unsigned char)(cl2 >> 8);
-	val->col.b2 = (unsigned char)(cl2);
-	val->col.d_r1 = (short)(val->col.r2 - val->col.r1);
-	val->col.d_g1 = (short)(val->col.g2 - val->col.g1);
-	val->col.d_b1 = (short)(val->col.b2 - val->col.b1);
-	val->col.d_r2 = (short)(val->col.r1 - val->col.r2);
-	val->col.d_g2 = (short)(val->col.g1 - val->col.g2);
-	val->col.d_b2 = (short)(val->col.b1 - val->col.b2);
 }
 
 void	ft_gradient_color(t_values *val, t_stock *lst, t_stock *next)

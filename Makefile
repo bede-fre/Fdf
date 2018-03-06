@@ -6,14 +6,14 @@
 #    By: bede-fre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 12:44:25 by bede-fre          #+#    #+#              #
-#    Updated: 2018/03/05 16:56:11 by bede-fre         ###   ########.fr        #
+#    Updated: 2018/03/06 14:09:32 by bede-fre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = clang
-SRC = sources/main.c sources/ft_free_list.c sources/ft_read_stock.c \
-	sources/ft_algo_bresenham.c sources/ft_color.c \
+SRC = sources/main.c sources/ft_free_error_iso_proj.c sources/ft_read_stock.c \
+	sources/ft_segment_tracer.c sources/ft_color.c \
 	sources/ft_draw.c
 INCLUDES = ./includes
 LIBFT = ./libft/libft.a

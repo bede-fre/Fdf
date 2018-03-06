@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 18:02:05 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/06 14:01:55 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,17 @@ static void		ft_link(t_stock *data, t_stock *tp_x, t_stock *tp_y)
 
 static void		ft_stock(t_values *val, t_stock *data, char **line)
 {
-	char		**tab;
 	char		**tp;
 
-	tab = ft_split_whitespaces(*line);
-	while (tab[++(val->ln)])
+	val->tab = ft_split_whitespaces(*line);
+	while (val->tab[++(val->ln)])
 	{
-		if (tab[(val->ln) + 1] != NULL)
+		if (val->tab[(val->ln) + 1] != NULL)
 			if (!(data->n_x = (t_stock*)ft_memalloc(sizeof(t_stock))))
 				ft_free_lst(&val->first_link);
 		data->x = val->ln;
 		data->y = val->cl;
-		tp = ft_strsplit(tab[val->ln], ',');
+		tp = ft_strsplit(val->tab[val->ln], ',');
 		data->z = ft_atoi(tp[0]);
 		data->color = (tp[1]) ? ft_atoi_base(tp[1], 16) : (int)(NULL);
 		ft_val_z_stock(val, tp);
@@ -69,10 +68,11 @@ static void		ft_stock(t_values *val, t_stock *data, char **line)
 		ft_clear_tab(tp);
 	}
 	ft_quit_line_less(val);
-	ft_clear_tab(tab);
+	val->x_max = val->ln;
+	ft_clear_tab(val->tab);
 }
 
-static t_stock	*ft_links_creation(t_values *val, t_stock *data)
+static t_stock	*ft_move_on_links(t_values *val, t_stock *data)
 {
 	if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
 		ft_free_lst(&val->first_link);
@@ -85,7 +85,6 @@ t_values		*ft_read_stock(int fd, char **line)
 {
 	t_stock		*data;
 	t_values	*val;
-	static int	first;
 
 	if (!(data = (t_stock*)ft_memalloc(sizeof(t_stock)))
 		|| !(val = (t_values*)ft_memalloc(sizeof(t_values))))
@@ -95,15 +94,12 @@ t_values		*ft_read_stock(int fd, char **line)
 	while (ft_gnl(fd, line) == 1)
 	{
 		val->ln = -1;
-		if (first == 0)
-			first++;
-		else
-			data = ft_links_creation(val, data);
+		if (data != NULL)
+			data = ft_move_on_links(val, data);
 		ft_stock(val, data, line);
 		(val->cl)++;
 		val->tp_y = val->first_x;
 		free(*line);
-		ft_stock_x_max(val);
 	}
 	while (data->n_x)
 		data = data->n_x;

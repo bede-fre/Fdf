@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/05 17:18:45 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/06 13:49:48 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-
-# define WHITE 0xFFFFFF
-# define CARROT_ORANGE 0xE58E26
-# define JALAPENO_RED 0xB71540
-# define AZRAQ_BLUE 0x4A69BD
-# define DUPAIN 0x60A3BC
-# define REEF_ENCOUNTER 0x079992
 
 typedef struct		s_stock
 {
@@ -94,6 +87,7 @@ typedef struct		s_draw
 
 typedef struct		s_values
 {
+	char			**tab;
 	int				x_max;
 	int				y_max;
 	int				ln;
@@ -111,23 +105,17 @@ typedef struct		s_values
 	t_draw			draw;
 }					t_values;
 
-void				ft_size_window(t_values *val, char *len, char *wid);
-void				ft_display(t_values *val, t_stock *list);
-int					ft_deal_key(int key, t_values *val);
-void				ft_fill_px(t_values *val, int x, int y, int color);
-void				ft_find_middle_link(t_values *val, t_stock *lst);
-void				ft_compare_color(int cl1, int cl2, t_values *val);
-void				ft_gradient_color(t_values *val, t_stock *lst, t_stock *next);
-void				ft_val_z_stock(t_values *val, char **tp);
-void				ft_color_range(t_values *val);
+t_values			*ft_read_stock(int fd, char **line);
 void				ft_free_lst(t_stock **list);
-void				ft_stock_x_max(t_values *val);
+void				ft_val_z_stock(t_values *val, char **tp);
 void				ft_quit_line_more(t_values *val);
 void				ft_quit_line_less(t_values *val);
-void				ft_proj_iso(t_stock *lst, t_stock *st, t_values *val);
-void				ft_fill_px(t_values *val, int x, int y, int color);
+void				ft_color_range(t_values *val);
+void				ft_display(t_values *val, t_stock *list);
+int					ft_deal_key(int key, t_values *val);
+void				ft_gradient_color(t_values *val, t_stock *lst, t_stock *next);
 void				ft_algo(t_values *val, t_stock *lst, t_stock *st, int color);
+void				ft_proj_iso(t_stock *lst, t_stock *st, t_values *val);
 int					ft_merge_color(unsigned char red, unsigned char green, unsigned char blue);
-t_values			*ft_read_stock(int fd, char **line);
 
 #endif
