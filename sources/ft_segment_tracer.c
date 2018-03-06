@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 13:28:36 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/06 14:06:57 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/06 16:46:18 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void	ft_fill_px(t_values *val, int x, int y, int color)
 {
-	int		first;
+	int		px;
 
-	first = (x * (val->draw.bpp) / 8) + (y * val->draw.sz_ln_px);
-	if (first < 0 || x >= (val->draw.w_win) || y >= (val->draw.l_win) ||
+	px = (x * (val->draw.bpp) / 8) + (y * val->draw.sz_ln_px);
+	if (px < 0 || x >= (val->draw.w_win) || y >= (val->draw.l_win) ||
 		x < 0 || y < 0)
 		return ;
-	val->draw.s_px[first] = (unsigned char)(color);
-	val->draw.s_px[first + 1] = (unsigned char)(color >> 8);
-	val->draw.s_px[first + 2] = (unsigned char)(color >> 16);
-	val->draw.s_px[first + 3] = (unsigned char)(color >> 24);
+	val->draw.s_px[px] = (unsigned char)(color);
+	val->draw.s_px[px + 1] = (unsigned char)(color >> 8);
+	val->draw.s_px[px + 2] = (unsigned char)(color >> 16);
+	val->draw.s_px[px + 3] = (unsigned char)(color >> 24);
 }
 
 static void	ft_fill_line(t_values *val, int col)

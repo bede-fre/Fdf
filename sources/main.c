@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/06 13:36:32 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/06 16:45:13 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void		ft_params_window(t_values *val, char *len, char *wid)
 	val->draw.w_win = (double)(ft_atoi(wid));
 	val->draw.var_x = (int)(val->draw.l_win / 2.0);
 	val->draw.var_y = (int)(val->draw.w_win / 2.0);
-	val->draw.zoom = 0.2;
+	val->draw.zoom = 10.0;
 	val->draw.r = 0.0 * (M_PI / 180.0);
 }
 
