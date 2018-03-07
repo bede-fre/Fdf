@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:11:28 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/06 16:30:19 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/07 09:48:18 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void		ft_stock(t_values *val, t_stock *data, char **line)
 	{
 		if (val->tab[(val->ln) + 1] != NULL)
 			if (!(data->n_x = (t_stock*)ft_memalloc(sizeof(t_stock))))
-				ft_free_lst(&val->first_link);
+				ft_free_lst(&val->first_link, 1);
 		data->x = val->ln;
 		data->y = val->cl;
 		tp = ft_strsplit(val->tab[val->ln], ',');
@@ -75,7 +75,7 @@ static void		ft_stock(t_values *val, t_stock *data, char **line)
 static t_stock	*ft_move_on_links(t_values *val, t_stock *data)
 {
 	if (!(data->n_y = (t_stock*)ft_memalloc(sizeof(t_stock))))
-		ft_free_lst(&val->first_link);
+		ft_free_lst(&val->first_link, 1);
 	data = data->n_y;
 	val->first_x = data;
 	return (data);
@@ -91,10 +91,11 @@ t_values		*ft_read_stock(int fd, char **line)
 		return (NULL);
 	val->first_x = data;
 	val->first_link = data;
+	val->first = 0;
 	while (ft_gnl(fd, line) == 1)
 	{
 		val->ln = -1;
-		if (data != NULL)
+		if (val->first++ != 0)
 			data = ft_move_on_links(val, data);
 		ft_stock(val, data, line);
 		(val->cl)++;

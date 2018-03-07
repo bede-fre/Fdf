@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/06 16:45:13 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/07 09:46:22 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,12 @@ int				main(int ac, char **av)
 		ft_usage();
 	if ((fd = open(av[1], O_RDONLY)) == -1)
 		ft_error("Nonexistent file");
-	val = ft_read_stock(fd, &line);
+	if (!(val = ft_read_stock(fd, &line)))
+		ft_error("Malloc failed");
+	if (close(fd) == -1)
+		ft_error("Failed to close correctly file descriptor");
 	ft_params_window(val, av[4], av[5]);
 	ft_compare_color(ft_atoi_base(av[2], 16), ft_atoi_base(av[3], 16), val);
 	ft_init_image(val);
-	ft_free_lst(&val->first_link);
-	free(val);
-	free(line);
-	if (close(fd) == -1)
-		ft_error("Failed to close correctly file descriptor");
 	return (0);
 }

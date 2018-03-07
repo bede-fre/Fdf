@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_list.c                                     :+:      :+:    :+:   */
+/*   ft_free_error_iso_proj.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 13:58:42 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/06 13:55:32 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/07 09:41:35 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-void		ft_free_lst(t_stock **list)
+void		ft_free_lst(t_stock **list, char error)
 {
 	t_stock	*lst;
 	t_stock	*line;
@@ -30,30 +30,22 @@ void		ft_free_lst(t_stock **list)
 			ft_memdel((void **)&tp);
 		}
 	}
+	if (error != 0)
+		ft_error("Program failed");
 }
 
 void		ft_quit_line_more(t_values *val)
 {
 	if (val->x_max != 0)
-	{
 		if (val->ln >= val->x_max)
-		{
-			ft_free_lst(&val->first_link);
-			ft_error("Wrong line length");
-		}
-	}
+			ft_free_lst(&val->first_link, 1);
 }
 
 void		ft_quit_line_less(t_values *val)
 {
 	if (val->ln < val->x_max)
-	{
 		if (val->x_max > val->ln)
-		{
-			ft_free_lst(&val->first_link);
-			ft_error("Wrong line length");
-		}
-	}
+			ft_free_lst(&val->first_link, 1);
 }
 
 static void	ft_iso_link(t_values *val, t_stock *lst)

@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:51:52 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/06 13:38:57 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/07 09:58:15 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_color_range(t_values *val)
 	}
 }
 
-void	ft_gradient_color(t_values *val, t_stock *lst, t_stock *next)
+void	ft_gradient_col(t_values *val, t_stock *lst, t_stock *next)
 {
 	float l_s;
 	float l_e;

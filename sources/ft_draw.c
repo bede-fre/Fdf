@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:42:53 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/06 16:20:09 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/07 09:32:01 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int			ft_deal_key(int key, t_values *val)
 		ft_display(val, val->first_link);
 	if (key == 53)
 	{
-		ft_free_lst(&val->first_link);
+		ft_free_lst(&val->first_link, 0);
 		exit(0);
 	}
 	return (0);

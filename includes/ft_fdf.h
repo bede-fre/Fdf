@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/06 13:49:48 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/07 09:58:51 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct		s_values
 	int				z_min;
 	int				z_max;
 	int				z_range;
+	char			first;
 	t_stock			*tp_y;
 	t_stock			*tp_x;
 	t_stock			*first_link;
@@ -106,16 +107,17 @@ typedef struct		s_values
 }					t_values;
 
 t_values			*ft_read_stock(int fd, char **line);
-void				ft_free_lst(t_stock **list);
+void				ft_free_lst(t_stock **list, char error);
 void				ft_val_z_stock(t_values *val, char **tp);
 void				ft_quit_line_more(t_values *val);
 void				ft_quit_line_less(t_values *val);
 void				ft_color_range(t_values *val);
 void				ft_display(t_values *val, t_stock *list);
 int					ft_deal_key(int key, t_values *val);
-void				ft_gradient_color(t_values *val, t_stock *lst, t_stock *next);
-void				ft_algo(t_values *val, t_stock *lst, t_stock *st, int color);
+void				ft_gradient_col(t_values *val, t_stock *lst, t_stock *next);
+void				ft_algo(t_values *val, t_stock *lst, t_stock *st, int col);
 void				ft_proj_iso(t_stock *lst, t_stock *st, t_values *val);
-int					ft_merge_color(unsigned char red, unsigned char green, unsigned char blue);
+int					ft_merge_color(unsigned char red, unsigned char green,
+					unsigned char blue);
 
 #endif
