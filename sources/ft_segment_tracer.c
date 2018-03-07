@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 13:28:36 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/06 16:46:18 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/07 10:02:37 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	ft_fill_column(t_values *val, int col)
 
 void		ft_algo(t_values *val, t_stock *lst, t_stock *st, int col)
 {
-	ft_gradient_color(val, lst, st);
+	ft_gradient_col(val, lst, st);
 	ft_proj_iso(lst, st, val);
 	val->algo.a = lst->a;
 	val->algo.b = lst->b;

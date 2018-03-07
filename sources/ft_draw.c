@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:42:53 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/07 09:32:01 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/03/07 11:07:23 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void		ft_display(t_values *val, t_stock *list)
 	t_stock	*line;
 	t_stock	*col;
 
+	val->first = 0;
 	col = list;
 	while (col)
 	{
@@ -26,7 +27,12 @@ void		ft_display(t_values *val, t_stock *list)
 			if (line->n_x)
 				ft_algo(val, line, line->n_x, line->color);
 			if (line->n_y)
-				ft_algo(val, line, line->n_y, line->color);
+			{
+				if (val->first == 0)
+					val->first = 1;
+				else
+					ft_algo(val, line, line->n_y, line->color);
+			}
 			line = line->n_x;
 		}
 		col = col->n_y;
