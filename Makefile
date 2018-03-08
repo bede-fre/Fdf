@@ -6,13 +6,16 @@
 #    By: bede-fre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 12:44:25 by bede-fre          #+#    #+#              #
-#    Updated: 2018/03/08 10:24:12 by bede-fre         ###   ########.fr        #
+#    Updated: 2018/03/08 11:40:06 by bede-fre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= fractol
+NAME		= fdf
 CC 		= clang
-SRC 		= sources/main.c
+SRC 		= sources/ft_read_stock.c sources/ft_segment_tracer.c \
+			sources/ft_color.c \
+			sources/ft_draw.c sources/main.c \
+			sources/ft_free_error_iso_proj.c
 INCLUDES	= ./includes
 LIBFT		= ./libft/libft.a
 MINILIBX	= ./minilibx/libmlx.a
