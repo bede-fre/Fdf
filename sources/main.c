@@ -6,13 +6,13 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/07 10:51:44 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/07/23 18:36:15 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-static void		ft_usage(void)
+static void	ft_usage(void)
 {
 	ft_putstr_fd("usage : ./fdf [filename.fdf] color_bottom [0x******]", 2);
 	ft_putstr_fd(" color_top [0x******] lenght_window [unsigned short]", 2);
@@ -20,17 +20,15 @@ static void		ft_usage(void)
 	exit(1);
 }
 
-static void		ft_params_window(t_values *val, char *len, char *wid)
+void		ft_params_window(t_values *val)
 {
-	val->draw.l_win = (double)(ft_atoi(len));
-	val->draw.w_win = (double)(ft_atoi(wid));
 	val->draw.var_x = (int)(val->draw.l_win / 2.0);
 	val->draw.var_y = (int)(val->draw.w_win / 2.0);
 	val->draw.zoom = 1.0;
 	val->draw.r = 0.0 * (M_PI / 180.0);
 }
 
-static void		ft_compare_color(int cl1, int cl2, t_values *val)
+static void	ft_compare_color(int cl1, int cl2, t_values *val)
 {
 	val->col.r1 = (unsigned char)(cl1 >> 16);
 	val->col.g1 = (unsigned char)(cl1 >> 8);
@@ -46,7 +44,7 @@ static void		ft_compare_color(int cl1, int cl2, t_values *val)
 	val->col.d_b2 = (short)(val->col.b1 - val->col.b2);
 }
 
-static void		ft_init_image(t_values *val)
+static void	ft_init_image(t_values *val)
 {
 	ft_color_range(val);
 	val->draw.mlx = mlx_init();
@@ -61,7 +59,7 @@ static void		ft_init_image(t_values *val)
 	mlx_loop(val->draw.mlx);
 }
 
-int				main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	int			fd;
 	t_values	*val;
@@ -75,7 +73,9 @@ int				main(int ac, char **av)
 		ft_error("Malloc failed");
 	if (close(fd) == -1)
 		ft_error("Failed to close correctly file descriptor");
-	ft_params_window(val, av[4], av[5]);
+	val->draw.l_win = (double)(ft_atoi(av[4]));
+	val->draw.w_win = (double)(ft_atoi(av[5]));
+	ft_params_window(val);
 	ft_compare_color(ft_atoi_base(av[2], 16), ft_atoi_base(av[3], 16), val);
 	ft_init_image(val);
 	return (0);

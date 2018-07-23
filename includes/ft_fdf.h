@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/07 09:58:51 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/07/23 18:36:44 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+
+# define KEY_Q 12
+# define KEY_W 13
+# define KEY_E 14
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_Z 6
+# define KEY_X 7
+# define KEY_C 8
+# define KEY_SPACE 49
+# define KEY_ECHAP 53
 
 typedef struct		s_stock
 {
@@ -107,6 +119,7 @@ typedef struct		s_values
 }					t_values;
 
 t_values			*ft_read_stock(int fd, char **line);
+void				ft_params_window(t_values *val);
 void				ft_free_lst(t_stock **list, char error);
 void				ft_val_z_stock(t_values *val, char **tp);
 void				ft_quit_line_more(t_values *val);

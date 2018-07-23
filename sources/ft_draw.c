@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:42:53 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/07 11:07:23 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/07/23 18:37:07 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,30 +64,30 @@ static void	ft_rev_display(t_values *val, t_stock *list)
 
 static void	ft_move_zoom(int key, t_values *val)
 {
-	if (key == 69)
+	if (key == KEY_C)
 		val->draw.zoom += 5;
-	if (key == 78)
+	if (key == KEY_Z)
 		val->draw.zoom -= 5;
-	if (key == 123)
+	if (key == KEY_A)
 		val->draw.var_x -= 10;
-	if (key == 124)
+	if (key == KEY_D)
 		val->draw.var_x += 10;
-	if (key == 125)
+	if (key == KEY_S)
 		val->draw.var_y += 10;
-	if (key == 126)
+	if (key == KEY_W)
 		val->draw.var_y -= 10;
 }
 
 static void	ft_rotate(int key, t_values *val)
 {
-	if (key == 0)
+	if (key == KEY_Q)
 	{
 		if (val->draw.r > 0.0 * (M_PI / 180.0))
 			val->draw.r -= 10.0 * (M_PI / 180.0);
 		else
 			val->draw.r = 350.0 * (M_PI / 180.0);
 	}
-	if (key == 2)
+	if (key == KEY_E)
 	{
 		if (val->draw.r < 350.0 * (M_PI / 180.0))
 			val->draw.r += 10.0 * (M_PI / 180.0);
@@ -104,17 +104,21 @@ int			ft_deal_key(int key, t_values *val)
 		val->draw.l_win);
 	val->draw.s_px = mlx_get_data_addr(val->draw.img, &val->draw.bpp,
 		&val->draw.sz_ln_px, &val->draw.endian);
-	if (key == 69 || key == 78 || key == 123 || key == 124 || key == 125
-		|| key == 126)
+	ft_putnbr(key);
+	ft_putchar('\n');
+	if (key == KEY_C || key == KEY_Z || key == KEY_A || key == KEY_D
+		|| key == KEY_S || key == KEY_W)
 		ft_move_zoom(key, val);
-	if (key == 0 || key == 2)
+	if (key == KEY_Q || key == KEY_E)
 		ft_rotate(key, val);
+	if (key == KEY_SPACE)
+		ft_params_window(val);
 	if ((val->draw.r > 46.0 * (M_PI / 180.0))
 		&& (val->draw.r < 225.0 * (M_PI / 180.00)))
 		ft_rev_display(val, val->last_link);
 	else
 		ft_display(val, val->first_link);
-	if (key == 53)
+	if (key == KEY_ECHAP)
 	{
 		ft_free_lst(&val->first_link, 0);
 		exit(0);
