@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:42:53 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/07/23 18:37:07 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/07/25 13:30:17 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,40 @@ static void	ft_rotate(int key, t_values *val)
 	}
 }
 
+static void	ft_enable_disable_auto_rot(int key, t_values *val)
+{
+	if (key == KEY_X)
+	{
+		if (val->auto_rot == 0)
+			val->auto_rot = 1;
+		else
+			val->auto_rot = 0;
+	}
+}
+
+static int	ft_auto_rot(t_values *val)
+{
+	if (val->auto_rot == 1)
+	{
+		mlx_clear_window(val->draw.mlx, val->draw.win);
+		mlx_destroy_image(val->draw.mlx, val->draw.img);
+		val->draw.img = mlx_new_image(val->draw.mlx, val->draw.w_win,
+			val->draw.l_win);
+		val->draw.s_px = mlx_get_data_addr(val->draw.img, &val->draw.bpp,
+			&val->draw.sz_ln_px, &val->draw.endian);
+		if (val->draw.r >= 0.0 * (M_PI / 180.0))
+			val->draw.r -= 1.0 * (M_PI / 180.0);
+		else
+			val->draw.r = 360.0 * (M_PI / 180.0);
+		if ((val->draw.r > 46.0 * (M_PI / 180.0))
+			&& (val->draw.r < 225.0 * (M_PI / 180.00)))
+			ft_rev_display(val, val->last_link);
+		else
+			ft_display(val, val->first_link);
+	}
+	return (0);
+}
+
 int			ft_deal_key(int key, t_values *val)
 {
 	mlx_clear_window(val->draw.mlx, val->draw.win);
@@ -113,11 +147,14 @@ int			ft_deal_key(int key, t_values *val)
 		ft_rotate(key, val);
 	if (key == KEY_SPACE)
 		ft_params_window(val);
+	if (key == KEY_X)
+		ft_enable_disable_auto_rot(key, val);
 	if ((val->draw.r > 46.0 * (M_PI / 180.0))
 		&& (val->draw.r < 225.0 * (M_PI / 180.00)))
 		ft_rev_display(val, val->last_link);
 	else
 		ft_display(val, val->first_link);
+	mlx_loop_hook(val->draw.mlx, ft_auto_rot, val);
 	if (key == KEY_ECHAP)
 	{
 		ft_free_lst(&val->first_link, 0);

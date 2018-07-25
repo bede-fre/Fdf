@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/07/23 18:36:44 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/07/25 07:56:00 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct		s_values
 	int				z_max;
 	int				z_range;
 	char			first;
+	char			auto_rot;
 	t_stock			*tp_y;
 	t_stock			*tp_x;
 	t_stock			*first_link;
