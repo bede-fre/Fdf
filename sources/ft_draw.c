@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:42:53 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/07/25 13:30:17 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/09/20 10:49:49 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ static void	ft_rev_display(t_values *val, t_stock *list)
 static void	ft_move_zoom(int key, t_values *val)
 {
 	if (key == KEY_C)
-		val->draw.zoom += 5;
+		val->draw.zoom *= 1.5;
 	if (key == KEY_Z)
-		val->draw.zoom -= 5;
+		val->draw.zoom /= (val->draw.zoom < 0.05) ? 1.0 : 1.5;
 	if (key == KEY_A)
 		val->draw.var_x -= 10;
 	if (key == KEY_D)
@@ -76,6 +76,10 @@ static void	ft_move_zoom(int key, t_values *val)
 		val->draw.var_y += 10;
 	if (key == KEY_W)
 		val->draw.var_y -= 10;
+	if (key == KEY_R)
+		val->z_val += 0.2;
+	if (key == KEY_F)
+		val->z_val -= 0.2;
 }
 
 static void	ft_rotate(int key, t_values *val)
@@ -138,10 +142,8 @@ int			ft_deal_key(int key, t_values *val)
 		val->draw.l_win);
 	val->draw.s_px = mlx_get_data_addr(val->draw.img, &val->draw.bpp,
 		&val->draw.sz_ln_px, &val->draw.endian);
-	ft_putnbr(key);
-	ft_putchar('\n');
 	if (key == KEY_C || key == KEY_Z || key == KEY_A || key == KEY_D
-		|| key == KEY_S || key == KEY_W)
+		|| key == KEY_S || key == KEY_W || key == KEY_R || key == KEY_F)
 		ft_move_zoom(key, val);
 	if (key == KEY_Q || key == KEY_E)
 		ft_rotate(key, val);

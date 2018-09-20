@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 13:58:42 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/03/07 09:41:35 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/09/10 15:44:02 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	ft_iso_link(t_values *val, t_stock *lst)
 	lst->y -= (val->y_max) / 2;
 	x = (double)lst->x * cos(val->draw.r) - (double)lst->y * sin(val->draw.r);
 	y = (double)lst->x * sin(val->draw.r) + (double)lst->y * cos(val->draw.r);
-	z = (double)lst->z;
+	z = (double)lst->z * val->z_val;
 	ang = 30.0 * (M_PI / 180.0);
 	lst->a = (int)(((x * cos(ang))
 		+ (y * cos(ang + (120.0 * (M_PI / 180.0))))
