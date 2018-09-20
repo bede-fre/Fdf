@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/07/25 07:56:00 by bede-fre         ###   ########.fr       */
+/*   Updated: 2018/09/10 15:41:19 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define KEY_Z 6
 # define KEY_X 7
 # define KEY_C 8
+# define KEY_R 15
+# define KEY_F 3
 # define KEY_SPACE 49
 # define KEY_ECHAP 53
 
@@ -107,6 +109,7 @@ typedef struct		s_values
 	int				z_min;
 	int				z_max;
 	int				z_range;
+	double			z_val;
 	char			first;
 	char			auto_rot;
 	t_stock			*tp_y;
