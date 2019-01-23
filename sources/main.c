@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/07/25 07:58:14 by bede-fre         ###   ########.fr       */
+/*   Updated: 2019/01/23 12:00:19 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 static void	ft_usage(void)
 {
 	ft_putstr_fd("usage : ./fdf [filename.fdf] color_bottom [0x******]", 2);
-	ft_putstr_fd(" color_top [0x******] lenght_window [unsigned short]", 2);
-	ft_putendl_fd(" widht_window [unsigned short]", 2);
+	ft_putstr_fd(" color_top [0x******]", 2);
 	exit(1);
 }
 
@@ -65,7 +64,9 @@ int			main(int ac, char **av)
 	t_values	*val;
 	char		*line;
 
-	if (ac != 6)
+//	if (ac != 4)
+//		ft_usage();
+	if (ac > 4 || ac < 2)
 		ft_usage();
 	if ((fd = open(av[1], O_RDONLY)) == -1)
 		ft_error("Nonexistent file");
@@ -73,10 +74,16 @@ int			main(int ac, char **av)
 		ft_error("Malloc failed");
 	if (close(fd) == -1)
 		ft_error("Failed to close correctly file descriptor");
-	val->draw.l_win = (double)(ft_atoi(av[4]));
-	val->draw.w_win = (double)(ft_atoi(av[5]));
+	val->draw.l_win = WINY;
+	val->draw.w_win = WINX;
 	ft_params_window(val);
-	ft_compare_color(ft_atoi_base(av[2], 16), ft_atoi_base(av[3], 16), val);
+	if (ac == 4)
+		ft_compare_color(ft_atoi_base(av[2], 16), ft_atoi_base(av[3], 16), val);
+	else if (ac == 3)
+		ft_compare_color(ft_atoi_base(av[2], 16), DEFAULT_COLOR, val);
+	else if (ac == 2)
+		ft_compare_color(DEFAULT_COLOR, DEFAULT_COLOR, val);
+
 	ft_init_image(val);
 	return (0);
 }
