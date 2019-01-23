@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:53:11 by bede-fre          #+#    #+#             */
-/*   Updated: 2019/01/23 11:57:53 by bede-fre         ###   ########.fr       */
+/*   Updated: 2019/01/23 12:58:25 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define KEY_ECHAP 53
 # define WINX 800
 # define WINY 600
-# define DEFAULT_COLOR 16777215
+# define DEFAULT_COLOR 0xFFFFFF
 
 typedef struct		s_stock
 {
