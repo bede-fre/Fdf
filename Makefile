@@ -6,20 +6,20 @@
 #    By: bede-fre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 12:44:25 by bede-fre          #+#    #+#              #
-#    Updated: 2018/03/08 11:40:06 by bede-fre         ###   ########.fr        #
+#    Updated: 2019/01/24 17:27:21 by bede-fre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= fdf
-CC 		= clang
+CC 			= clang
 SRC 		= sources/ft_read_stock.c sources/ft_segment_tracer.c \
-			sources/ft_color.c \
+			sources/ft_color.c sources/ft_display.c \
 			sources/ft_draw.c sources/main.c \
 			sources/ft_free_error_iso_proj.c
 INCLUDES	= ./includes
 LIBFT		= ./libft/libft.a
 MINILIBX	= ./minilibx/libmlx.a
-OBJ		= $(SRC:.c=.o)
+OBJ			= $(SRC:.c=.o)
 FLAGS		= -Wall -Wextra -Werror
 
 _GREY		=$ \033[30m

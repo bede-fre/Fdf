@@ -6,39 +6,11 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:42:53 by bede-fre          #+#    #+#             */
-/*   Updated: 2018/09/20 10:49:49 by bede-fre         ###   ########.fr       */
+/*   Updated: 2019/01/24 17:32:13 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
-
-void		ft_display(t_values *val, t_stock *list)
-{
-	t_stock	*line;
-	t_stock	*col;
-
-	val->first = 0;
-	col = list;
-	while (col)
-	{
-		line = col;
-		while (line)
-		{
-			if (line->n_x)
-				ft_algo(val, line, line->n_x, line->color);
-			if (line->n_y)
-			{
-				if (val->first == 0)
-					val->first = 1;
-				else
-					ft_algo(val, line, line->n_y, line->color);
-			}
-			line = line->n_x;
-		}
-		col = col->n_y;
-	}
-	mlx_put_image_to_window(val->draw.mlx, val->draw.win, val->draw.img, 0, 0);
-}
 
 static void	ft_rev_display(t_values *val, t_stock *list)
 {
@@ -100,17 +72,6 @@ static void	ft_rotate(int key, t_values *val)
 	}
 }
 
-static void	ft_enable_disable_auto_rot(int key, t_values *val)
-{
-	if (key == KEY_X)
-	{
-		if (val->auto_rot == 0)
-			val->auto_rot = 1;
-		else
-			val->auto_rot = 0;
-	}
-}
-
 static int	ft_auto_rot(t_values *val)
 {
 	if (val->auto_rot == 1)
@@ -150,7 +111,7 @@ int			ft_deal_key(int key, t_values *val)
 	if (key == KEY_SPACE)
 		ft_params_window(val);
 	if (key == KEY_X)
-		ft_enable_disable_auto_rot(key, val);
+		val->auto_rot = (val->auto_rot == 0) ? 1 : 0;
 	if ((val->draw.r > 46.0 * (M_PI / 180.0))
 		&& (val->draw.r < 225.0 * (M_PI / 180.00)))
 		ft_rev_display(val, val->last_link);
@@ -158,9 +119,6 @@ int			ft_deal_key(int key, t_values *val)
 		ft_display(val, val->first_link);
 	mlx_loop_hook(val->draw.mlx, ft_auto_rot, val);
 	if (key == KEY_ECHAP)
-	{
-		ft_free_lst(&val->first_link, 0);
 		exit(0);
-	}
 	return (0);
 }

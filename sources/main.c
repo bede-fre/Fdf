@@ -6,7 +6,7 @@
 /*   By: bede-fre <bede-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:14:54 by bede-fre          #+#    #+#             */
-/*   Updated: 2019/01/23 12:58:27 by bede-fre         ###   ########.fr       */
+/*   Updated: 2019/01/24 17:11:51 by bede-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	ft_init_image(t_values *val)
 	val->draw.s_px = mlx_get_data_addr(val->draw.img, &val->draw.bpp,
 		&val->draw.sz_ln_px, &val->draw.endian);
 	ft_display(val, val->first_link);
-	mlx_key_hook(val->draw.win, ft_deal_key, val);
+	mlx_hook(val->draw.win, 2, (1L << 0), ft_deal_key, val);
 	mlx_loop(val->draw.mlx);
 }
 
@@ -64,8 +64,6 @@ int			main(int ac, char **av)
 	t_values	*val;
 	char		*line;
 
-//	if (ac != 4)
-//		ft_usage();
 	if (ac > 4 || ac < 2)
 		ft_usage();
 	if ((fd = open(av[1], O_RDONLY)) == -1)
@@ -83,7 +81,6 @@ int			main(int ac, char **av)
 		ft_compare_color(ft_atoi_base(av[2], 16), DEFAULT_COLOR, val);
 	else if (ac == 2)
 		ft_compare_color(DEFAULT_COLOR, DEFAULT_COLOR, val);
-
 	ft_init_image(val);
 	return (0);
 }
