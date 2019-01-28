@@ -13,7 +13,7 @@ A simple 3D height-map renderer.
 
 ## Download format :
 
-```git clone https://github.com/bede-fre/fdf_42.git```
+```git clone https://github.com/bede-fre/Fdf.git```
 
 ## Compilation :
 
