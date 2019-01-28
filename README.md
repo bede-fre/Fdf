@@ -17,7 +17,7 @@ A simple 3D height-map renderer.
 
 ## Compilation :
 
-Enter in the dowloaded file ```cd fdf/``` and compile an executable with command ```make``` after that run the program with or without color arguments ```./fdf map color_bottom color_top```
+Enter in the dowloaded folder ```cd fdf/``` and compile an executable with command ```make``` after that run the program with or without color arguments ```./fdf map color_bottom color_top```
 
 ### Example :
 
