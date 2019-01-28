@@ -7,7 +7,7 @@ A simple 3D height-map renderer.
 
 * Height control
 * Top and bottom colors choices as arguments
-* Color gradient between top and bottom color
+* Color gradient between bottom and top color
 * Camera controls (translations, rotations, zoom)
 
 
