@@ -25,19 +25,19 @@ Enter in the dowloaded file ```cd fdf/``` and compile an executable with command
 
 ## Commands :
 
-- W     Up
-- S     Down
-- D     Right
-- A     Left
-- Q     Left rotation
-- E     Right rotation
-- X     Enable/disable auto-rotation
-- Z     Dezoom
-- C     Zoom
-- R     Up height
-- F     Down height
-- SPACE Reset
-- ESC   Quit
+- W : Up
+- S : Down
+- D : Right
+- A : Left
+- Q : Left rotation
+- E : Right rotation
+- X : Enable/disable auto-rotation
+- Z : Dezoom
+- C : Zoom
+- R : Up height
+- F : Down height
+- SPACE : Reset initial position
+- ESC : Quit program
 
 ## Screenshots :
 
