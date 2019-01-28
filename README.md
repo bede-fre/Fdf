@@ -13,18 +13,15 @@ A simple 3D height-map renderer.
 
 ## Download format :
 
-```
-git clone https://github.com/bede-fre/fdf_42.git
-```
+```git clone https://github.com/bede-fre/fdf_42.git```
 
 ## Compilation :
 
 Enter in the dowloaded file ```cd fdf/``` and compile an executable with command ```make``` after that run the program with or without color arguments ```./fdf map color_bottom color_top```
 
 ### Example :
-```
-./fdf test_maps/42.fdf 0xFF0000 0x00FF00
-```
+
+```./fdf test_maps/42.fdf 0xFF0000 0x00FF00```
 
 ## Commands :
 
