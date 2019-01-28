@@ -39,5 +39,8 @@ Enter in the dowloaded file ```cd fdf/``` and compile an executable with command
 - SPACE Reset
 - ESC   Quit
 
-## Screenshot :
+## Screenshots :
 
+![screenshot](/screens/Pyramide.png?raw=true)
+
+![screenshot](/screens/France.png?raw=true)
