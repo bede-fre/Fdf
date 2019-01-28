@@ -30,6 +30,16 @@ Enter in the dowloaded file ```cd fdf/``` and compile an executable with command
 * D     Right
 * A     Left
 
+
+
+
+
+
+
+
+
+
+
 * Q     Left rotation
 * E     Right rotation
 * X     Enable/disable auto-rotation
